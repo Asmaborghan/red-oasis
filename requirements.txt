@@ -1,2 +1,6 @@
 streamlit>=1.40
 pandas
+numpy
+scikit-learn>=1.4
+shap>=0.46
+joblib

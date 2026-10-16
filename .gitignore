@@ -12,6 +12,10 @@ env/
 # Streamlit local settings
 .streamlit/
 
+# Synthetic interface-test model (never commit; not real results)
+model/artifacts_synthetic_demo/
+.pytest_cache/
+
 # Operating system files
 .DS_Store
 Thumbs.db
