@@ -17,12 +17,13 @@ import streamlit as st
 # ======================================================================
 
 SITE = {
-    "name": {"en": "Daris Oasis", "ar": "واحة الدريز"},
+    "name": {"en": "Dariz Oasis", "ar": "واحة الدريز"},
     "region": {"en": "Ibri, Ad Dhahirah", "ar": "عبري، الظاهرة"},
-    "lat": 23.32,       # TODO (Shareefa): replace with the verified latitude
-    "lon": 56.62,       # TODO (Shareefa): replace with the verified longitude
-    "verified": False,  # TODO (Shareefa): set True once confirmed on satellite view
-    "crop": None,       # TODO (Shareefa): e.g. {"en": "Date palm", "ar": "نخيل التمر"}
+    "lat": 23.308639,
+    "lon": 56.613083,
+    "verified": True,
+    "crop": {"en": "Date palm", "ar": "نخيل التمر"},
+    "area_ha": 21.6,  # rough map measurement; boundary needs GIS confirmation
 }
 
 # Illustrative thresholds for the demonstration advisor.
@@ -34,12 +35,77 @@ THRESHOLDS = {
     "ndvi_low": 0.30,    # vegetation index below which stress is flagged
 }
 
-# TODO (Shareefa): fill in Mars-mode values from NASA closed-environment sources.
+# Published values from Shareefa's research brief.
+# Dariz data are historical; the irrigation trial is from a different location.
+CROP_RESEARCH = {
+    "dariz_study_period": "2002–2003",
+    "crop": "Date palm (Phoenix dactylifera)",
+    "annual_demand_mm": 3620,
+    "annual_supply_mm_including_effective_rain": 3235,
+    "demand_supply_ratio": 1.12,
+    "shortfall_mm": 385,
+    "demand_m3_ha_year": 36200,
+    "supply_m3_ha_year": 32350,
+    "fruit_stages_after_pollination": ["Hababouk", "Kimri", "Khalal", "Rutab", "Tamar"],
+    "oman_trial_period": "2015–2016",
+    "oman_trial_location": "Al Kamil and Al Wafi Agricultural Research Station",
+    "oman_trial_variety": "Khalas",
+    "bubbler_water_m3_ha_year": 9966,
+    "subsurface_drip_60pct_etc_water_m3_ha_year": 6421,
+    "bubbler_yield_kg_per_palm": 79.0,
+    "subsurface_drip_60pct_etc_yield_kg_per_palm": 78.3,
+    "subsurface_drip_40pct_etc_yield_kg_per_palm": 69.8,
+    "subsurface_drip_20pct_etc_yield_kg_per_palm": 68.8,
+}
+
+
+# NASA references are for closed-environment concepts and ISS lettuce.
+# They are not validated Mars conditions or date-palm growing requirements.
 MARS_PARAMS = {
-    "water": {"en": "Recycled, closed loop", "ar": "إعادة تدوير في دورة مغلقة"},
-    "light": {"en": "Artificial", "ar": "صناعية"},
-    "temperature": None,
-    "crop_water": None,
+    "water": {
+        "en": (
+            "Closed-loop water recovery ON. Team stress tests: external "
+            "make-up water at 50%, 75%, and 100% of the Earth baseline. "
+            "These percentages are team assumptions, not NASA Mars values."
+        ),
+        "ar": (
+            "إعادة تدوير المياه في دورة مغلقة. اختبارات الفريق: ماء تعويض "
+            "خارجي بنسبة 50٪ و75٪ و100٪ من مرجع الأرض. هذه افتراضات للفريق "
+            "وليست قيماً منشورة من ناسا للمريخ."
+        ),
+    },
+    "light": {
+        "en": (
+            "Artificial; NASA ISS lettuce reference: "
+            "16 h light / 8 h dark, 200 µmol m⁻² s⁻¹."
+        ),
+        "ar": (
+            "إضاءة صناعية؛ مرجع ناسا لخس محطة الفضاء: "
+            "16 ساعة إضاءة / 8 ساعات ظلام، 200 ميكرومول م⁻² ث⁻¹."
+        ),
+    },
+    "temperature": {
+        "en": (
+            "NASA plant-growth reference: 10–35°C and 40–85% RH. "
+            "ISS lettuce reference: 23.25°C."
+        ),
+        "ar": (
+            "مرجع ناسا العام لنمو النباتات: 10–35°م ورطوبة نسبية 40–85٪. "
+            "مرجع خس محطة الفضاء: 23.25°م."
+        ),
+    },
+    "crop_water": {
+        "en": (
+            "No validated Mars water requirement for date palm. "
+            "Dariz Earth reference (2002–2003): demand 3,620 mm/year; "
+            "supply 3,235 mm/year."
+        ),
+        "ar": (
+            "لا توجد قيمة موثقة لاحتياج نخيل التمر من الماء على المريخ. "
+            "مرجع فلج الدريز على الأرض (2002–2003): الطلب 3,620 مم/سنة، "
+            "والإمداد 3,235 مم/سنة."
+        ),
+    },
 }
 
 DATA_SOURCES = [
@@ -458,7 +524,7 @@ with tab_mars:
         {t["m_param"]: t["m_temp"], t["m_value"]: mars_value(MARS_PARAMS["temperature"])},
         {t["m_param"]: t["m_crop"], t["m_value"]: mars_value(MARS_PARAMS["crop_water"])},
     ]
-    st.dataframe(pd.DataFrame(mars_rows), hide_index=True)
+    st.table(pd.DataFrame(mars_rows).set_index(t["m_param"]))
 
 # ======================================================================
 # FOOTER
