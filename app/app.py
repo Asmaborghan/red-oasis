@@ -225,6 +225,7 @@ TEXT = {
         "c_use": "Use in the model",
         "c_status": "Status",
         "planned": "Planned",
+        "used": "Used (Dariz, 2024-2026)",
         "soil": "Soil moisture",
         "soil_use": "Water availability in the root zone",
         "ndvi": "Vegetation index (NDVI)",
@@ -324,6 +325,41 @@ TEXT = {
         "m_temp": "Temperature control",
         "m_crop": "Crop water demand",
         "m_pending": "Pending",
+        "evid": "Site evidence",
+        "evid_note": (
+            "Published study of Falaj al-Dariz (Al-Ghafri, 2006; observations "
+            "2002-2003). These are historical values, not current measurements."
+        ),
+        "evid_demand": "Crop water demand (date palm)",
+        "evid_supply": "Water supplied (including effective rain)",
+        "evid_unit": "Millimetres per year",
+        "evid_demand_short": "Demand",
+        "evid_supply_short": "Supply",
+        "evid_short": "Shortfall (mm per year)",
+        "evid_ratio": "Demand / supply ratio",
+        "evid_caption": "Demand exceeded supply by {s:,} mm a year, about {p:.1f}% of demand.",
+        "evid_trial_t": "Published comparison from another location",
+        "evid_trial": (
+            "At the Al Kamil and Al Wafi research station (Khalas palms, 2015-2016), "
+            "subsurface drip at 60% of crop water demand used {w2:,} m³/ha a year "
+            "versus {w1:,} m³/ha with bubbler irrigation ({pct:.1f}% less), with a "
+            "similar yield ({y2} vs {y1} kg per palm). This is a published result "
+            "from a different site, not a Red Oasis measurement."
+        ),
+        "mars_whatif": "Water what-if (illustrative)",
+        "mars_baseline": "Earth baseline: Dariz date-palm demand of {d:,} m³/ha per year.",
+        "mars_makeup": "External make-up water (% of Earth baseline)",
+        "mars_recovery": "Water recovered and reused (%)",
+        "mars_supplied": "Water available to the crop (m³/ha per year)",
+        "mars_met": "Share of crop demand met",
+        "mars_gap": "Shortfall (m³/ha per year)",
+        "mars_ok": "Demand is met in this scenario.",
+        "mars_short": "The crop would be short of water in this scenario.",
+        "mars_assump": (
+            "Illustrative arithmetic: water available = make-up water ÷ (1 − recovery). "
+            "The recovery rate and the 50/75/100% levels are team assumptions, not "
+            "NASA values, and this is not a simulation of a Mars greenhouse."
+        ),
         "footer": (
             "Developed by Team Red Oasis for the NASA Space Apps Challenge 2026. "
             "This is an independent prototype and not an official NASA product. "
@@ -369,6 +405,7 @@ TEXT = {
         "c_use": "الاستخدام في النموذج",
         "c_status": "الحالة",
         "planned": "مخطط",
+        "used": "مستخدم (الدريز، 2024-2026)",
         "soil": "رطوبة التربة",
         "soil_use": "توفر المياه في منطقة الجذور",
         "ndvi": "مؤشر الغطاء النباتي (NDVI)",
@@ -460,6 +497,41 @@ TEXT = {
         "m_temp": "التحكم بالحرارة",
         "m_crop": "احتياج المحصول من المياه",
         "m_pending": "قيد التحديد",
+        "evid": "أدلة الموقع",
+        "evid_note": (
+            "دراسة منشورة عن فلج الدريز (الغافري، 2006؛ ملاحظات 2002-2003). "
+            "هذه قيم تاريخية وليست قياسات حالية."
+        ),
+        "evid_demand": "احتياج المحصول من الماء (نخيل التمر)",
+        "evid_supply": "الماء المتوفر (شاملاً المطر الفعّال)",
+        "evid_unit": "ملمتر في السنة",
+        "evid_demand_short": "الطلب",
+        "evid_supply_short": "الإمداد",
+        "evid_short": "العجز (ملم في السنة)",
+        "evid_ratio": "نسبة الطلب إلى الإمداد",
+        "evid_caption": "تجاوز الطلب الإمداد بمقدار {s:,} ملم في السنة، أي نحو {p:.1f}% من الطلب.",
+        "evid_trial_t": "مقارنة منشورة من موقع آخر",
+        "evid_trial": (
+            "في محطة الكامل والوافي للأبحاث (نخيل الخلاص، 2015-2016)، استهلك الري "
+            "بالتنقيط تحت السطحي عند 60% من احتياج المحصول {w2:,} م³/هكتار في السنة "
+            "مقابل {w1:,} م³/هكتار بالري بالفقاعات (أقل بنسبة {pct:.1f}%)، مع إنتاج "
+            "مماثل ({y2} مقابل {y1} كجم للنخلة). هذه نتيجة منشورة من موقع مختلف، "
+            "وليست قياساً من Red Oasis."
+        ),
+        "mars_whatif": "سيناريو الماء (توضيحي)",
+        "mars_baseline": "مرجع الأرض: احتياج نخيل الدريز {d:,} م³/هكتار في السنة.",
+        "mars_makeup": "ماء التعويض الخارجي (% من مرجع الأرض)",
+        "mars_recovery": "الماء المُسترجَع والمُعاد استخدامه (%)",
+        "mars_supplied": "الماء المتاح للمحصول (م³/هكتار في السنة)",
+        "mars_met": "نسبة تغطية احتياج المحصول",
+        "mars_gap": "العجز (م³/هكتار في السنة)",
+        "mars_ok": "الاحتياج مغطّى في هذا السيناريو.",
+        "mars_short": "سيعاني المحصول من نقص الماء في هذا السيناريو.",
+        "mars_assump": (
+            "حساب توضيحي: الماء المتاح = ماء التعويض ÷ (1 − نسبة الاسترجاع). "
+            "نسبة الاسترجاع ومستويات 50/75/100% افتراضات من الفريق وليست قيماً من ناسا، "
+            "وهذا ليس محاكاة لبيت زراعي على المريخ."
+        ),
         "footer": (
             "طوّره فريق Red Oasis لتحدي ناسا لتطبيقات الفضاء 2026. "
             "هذا نموذج أولي مستقل وليس منتجاً رسمياً من ناسا. "
@@ -478,6 +550,7 @@ STYLE = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
 html, body, .stApp, .stApp * { font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic', 'Segoe UI', sans-serif; }
+.stApp [data-testid="stIconMaterial"], .stApp span[class*="material-symbols"], .stApp span[class*="material-icons"] { font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', 'Material Icons' !important; }
 .block-container { max-width: 1080px; padding-top: 1.5rem; }
 header[data-testid="stHeader"] { background: transparent; }
 .ro-hero { background: #0f2347; color: #ffffff; padding: 2.2rem 2rem; border-radius: 6px; margin: 0.5rem 0 1.6rem 0; }
@@ -592,6 +665,45 @@ with right:
     )
 
 # ======================================================================
+# SITE EVIDENCE (published values, see CROP_RESEARCH)
+# ======================================================================
+
+st.header(t["evid"])
+st.caption(t["evid_note"])
+ev_left, ev_right = st.columns([3, 2])
+with ev_left:
+    st.bar_chart(
+        pd.DataFrame(
+            {t["evid_unit"]: [
+                CROP_RESEARCH["annual_demand_mm"],
+                CROP_RESEARCH["annual_supply_mm_including_effective_rain"],
+            ]},
+            index=[t["evid_demand_short"], t["evid_supply_short"]],
+        )
+    )
+with ev_right:
+    st.metric(t["evid_short"], f"{CROP_RESEARCH['shortfall_mm']:,}")
+    st.metric(t["evid_ratio"], f"{CROP_RESEARCH['demand_supply_ratio']:.2f}")
+st.write(
+    t["evid_caption"].format(
+        s=CROP_RESEARCH["shortfall_mm"],
+        p=100 * CROP_RESEARCH["shortfall_mm"] / CROP_RESEARCH["annual_demand_mm"],
+    )
+)
+_w1 = CROP_RESEARCH["bubbler_water_m3_ha_year"]
+_w2 = CROP_RESEARCH["subsurface_drip_60pct_etc_water_m3_ha_year"]
+with st.expander(t["evid_trial_t"]):
+    st.write(
+        t["evid_trial"].format(
+            w1=_w1,
+            w2=_w2,
+            pct=100 * (_w1 - _w2) / _w1,
+            y1=CROP_RESEARCH["bubbler_yield_kg_per_palm"],
+            y2=CROP_RESEARCH["subsurface_drip_60pct_etc_yield_kg_per_palm"],
+        )
+    )
+
+# ======================================================================
 # DATA SOURCES
 # ======================================================================
 
@@ -601,7 +713,7 @@ rows = [
         t["c_source"]: source,
         t["c_var"]: t[var_key],
         t["c_use"]: t[use_key],
-        t["c_status"]: t["planned"],
+        t["c_status"]: t["used"],
     }
     for source, var_key, use_key in DATA_SOURCES
 ]
@@ -668,7 +780,7 @@ st.markdown(
 if use_ai:
     pred = ai["prediction"]
     st.markdown(t["forecast"].format(
-        label=t[FEATURE_TEXT[pred["target"]]],
+        label=t[FEATURE_TEXT[pred["target"]]].lower() if lang == "en" else t[FEATURE_TEXT[pred["target"]]],
         h=pred["horizon_days"],
         v=pred["value"],
         unit="%" if pred["target"] == "soil_moisture_pct" else "",
@@ -747,6 +859,27 @@ with tab_mars:
         {t["m_param"]: t["m_crop"], t["m_value"]: mars_value(MARS_PARAMS["crop_water"])},
     ]
     st.table(pd.DataFrame(mars_rows).set_index(t["m_param"]))
+
+    st.subheader(t["mars_whatif"])
+    _demand = CROP_RESEARCH["demand_m3_ha_year"]
+    st.caption(t["mars_baseline"].format(d=_demand))
+    w1_, w2_ = st.columns(2)
+    with w1_:
+        makeup = st.select_slider(t["mars_makeup"], options=[50, 75, 100], value=75)
+    with w2_:
+        recovery = st.slider(t["mars_recovery"], 0, 95, 0, step=5)
+    available = (makeup / 100) * _demand / (1 - recovery / 100)
+    met = min(100.0, 100 * available / _demand)
+    gap = max(0.0, _demand - available)
+    m1, m2, m3 = st.columns(3)
+    m1.metric(t["mars_supplied"], f"{available:,.0f}")
+    m2.metric(t["mars_met"], f"{met:.0f}%")
+    m3.metric(t["mars_gap"], f"{gap:,.0f}")
+    if gap > 0:
+        st.warning(t["mars_short"])
+    else:
+        st.success(t["mars_ok"])
+    st.caption(t["mars_assump"])
 
 # ======================================================================
 # FOOTER
