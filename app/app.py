@@ -9,8 +9,18 @@ CONFIGURATION block below. Search for "TODO" to find every place
 that still needs a real value.
 """
 
+import sys
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
+
+# The AI component lives in model/ at the repository root.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+try:
+    from model.predict import model_status, predict
+except Exception:  # keep the website working if ML packages are missing
+    predict = model_status = None
 
 # ======================================================================
 # CONFIGURATION
@@ -27,10 +37,12 @@ SITE = {
 }
 
 # Illustrative thresholds for the demonstration advisor.
-# TODO (Shareefa): replace with crop-specific values from the research document.
+# Soil moisture cut-offs are the 25th and 75th percentile of the Dariz SMAP record
+# (7.0-27.4 %, median 8.8 %), so they describe "dry/normal for this site", not a
+# crop requirement. TODO (Shareefa): replace with crop-specific values when available.
 THRESHOLDS = {
-    "soil_dry": 30,      # soil moisture (%) below which irrigation is advised
-    "soil_moderate": 45,
+    "soil_dry": 8.4,        # forecast soil moisture (%) below this: irrigate
+    "soil_moderate": 9.3,   # below this: monitor
     "temp_high": 40,     # air temperature (deg C)
     "ndvi_low": 0.30,    # vegetation index below which stress is flagged
 }
@@ -117,12 +129,10 @@ DATA_SOURCES = [
 
 
 def get_recommendation(soil: float, temp: float, ndvi: float):
-    """Return (level, reasons) for the demonstration advisor.
+    """Return (level, reasons) for the rule-based demonstration advisor.
 
-    TODO (Yaqeen): replace this rule-based logic with the trained model's
-    predict() function and its SHAP-based explanation. Keep the same return
-    shape: a level in {"irrigate", "monitor", "none"} and a list of
-    (reason_key, value) pairs.
+    Used only as a fallback when no trained model is available; the
+    trained model is called through get_ai_assessment() below.
     """
     score, reasons = 0, []
     if soil < THRESHOLDS["soil_dry"]:
@@ -141,6 +151,33 @@ def get_recommendation(soil: float, temp: float, ndvi: float):
         reasons.append(("r_ok", None))
     level = "irrigate" if score >= 2 else "monitor" if score == 1 else "none"
     return level, reasons
+
+
+def get_ai_assessment(soil: float, temp: float, ndvi: float, rain: float, et0: float):
+    """Call Yaqeen's model. Returns the predict() result dict, or None if
+    the AI package could not be imported. See model/README.md."""
+    if predict is None:
+        return None
+    return predict(
+        {
+            "soil_moisture_pct": soil,
+            "ndvi": ndvi,
+            "rainfall_7d_mm": rain,
+            "temperature_c": temp,
+            "et0_mm": et0,
+        },
+        thresholds=THRESHOLDS,
+    )
+
+
+# Model feature name -> TEXT key for its display label.
+FEATURE_TEXT = {
+    "soil_moisture_pct": "soil",
+    "ndvi": "ndvi",
+    "rainfall_7d_mm": "rain7",
+    "temperature_c": "temp_air",
+    "et0_mm": "et0",
+}
 
 
 # ======================================================================
@@ -215,6 +252,58 @@ TEXT = {
         "r_heat": "High air temperature increases water demand ({v:.0f} °C).",
         "r_veg": "The vegetation index suggests crop stress (NDVI {v:.2f}).",
         "r_ok": "No stress indicators detected.",
+        "in_rain": "Rainfall, last 7 days (mm)",
+        "in_et0": "Reference evapotranspiration ET0 (mm/day)",
+        "rain7": "Rainfall, last 7 days",
+        "temp_air": "Air temperature (daily mean)",
+        "et0": "Reference evapotranspiration (ET0)",
+        "ai_note": (
+            "Forecast from the trained model. Inputs are entered manually here, "
+            "not read live from NASA services. Air temperature is treated as the daily mean."
+        ),
+        "ai_location_ok": (
+            "The model was trained on NASA data for the Dariz farm point "
+            "({lat:.2f}° N, {lon:.2f}° E). SMAP soil moisture is a regional (~9 km) "
+            "signal, and the model is experimental."
+        ),
+        "ai_location": (
+            "The model was trained on NASA data for a test point near Nizwa "
+            "({site}, {lat:.2f}° N, {lon:.2f}° E), not for the Dariz farm shown above. "
+            "Data for the exact farm location are still pending."
+        ),
+        "ai_missing": (
+            "The trained model is not available yet, so the simple rules "
+            "below are shown instead."
+        ),
+        "ai_synthetic": (
+            "Interface test: this model was trained on synthetic data. The "
+            "forecast, recommendation and explanation are not real results."
+        ),
+        "forecast": "Forecast {label} in {h} days: {v:.1f} {unit}",
+        "rec_caveat": (
+            "Thresholds are illustrative and SMAP soil moisture is a regional "
+            "(~9 km) signal. Confirm with the grower before irrigating."
+        ),
+        "shap_t": "Why the model gave this forecast (SHAP)",
+        "shap_base": "Average model forecast: {v:.1f}",
+        "shap_up": "{f} = {x:.2f} raised the forecast by {v:.2f}",
+        "shap_down": "{f} = {x:.2f} lowered the forecast by {v:.2f}",
+        "shap_imputed": " (missing, filled with a typical value)",
+        "shap_note": "These show how the model uses each input. They are not proof of cause.",
+        "eval_t": "Model evaluation (real NASA-derived data)",
+        "eval_line": (
+            "Average forecast error (MAE) on {n} held-out days ({start} to {end}): "
+            "model {m:.2f}, 'no change' baseline {p:.2f}, 'always the average' baseline {a:.2f} "
+            "percentage points of soil moisture."
+        ),
+        "eval_cv_worse": (
+            "Within the earlier training period the model did not beat the "
+            "'no change' baseline, so its advantage is not yet reliable."
+        ),
+        "eval_mean_close": (
+            "Soil moisture here changes little except after rain, so simple "
+            "baselines are hard to beat."
+        ),
         "env": "Operating environments",
         "tab_earth": "Earth",
         "tab_mars": "Mars (concept)",
@@ -307,6 +396,54 @@ TEXT = {
         "r_heat": "ارتفاع الحرارة يزيد الطلب على المياه ({v:.0f} °م).",
         "r_veg": "مؤشر الغطاء النباتي يدل على إجهاد المحصول (NDVI {v:.2f}).",
         "r_ok": "لا توجد مؤشرات إجهاد.",
+        "in_rain": "الأمطار خلال آخر 7 أيام (مم)",
+        "in_et0": "التبخر-نتح المرجعي ET0 (مم/يوم)",
+        "rain7": "الأمطار خلال آخر 7 أيام",
+        "temp_air": "درجة حرارة الهواء (المتوسط اليومي)",
+        "et0": "التبخر-نتح المرجعي (ET0)",
+        "ai_note": (
+            "توقع من النموذج المدرَّب. تُدخل القيم يدوياً هنا ولا تُقرأ مباشرة "
+            "من خدمات ناسا. تُعامل درجة الحرارة على أنها المتوسط اليومي."
+        ),
+        "ai_location_ok": (
+            "دُرِّب النموذج على بيانات ناسا لنقطة مزرعة الدريز "
+            "({lat:.2f}° شمالاً، {lon:.2f}° شرقاً). رطوبة التربة من SMAP إشارة "
+            "إقليمية (نحو 9 كم)، والنموذج تجريبي."
+        ),
+        "ai_location": (
+            "دُرِّب النموذج على بيانات ناسا لنقطة اختبار قرب نزوى "
+            "({site}، {lat:.2f}° شمالاً، {lon:.2f}° شرقاً)، وليس لمزرعة الدريز المعروضة أعلاه. "
+            "بيانات موقع المزرعة الدقيق ما زالت قيد الانتظار."
+        ),
+        "ai_missing": "النموذج المدرَّب غير متاح بعد، لذا تُعرض القواعد المبسّطة أدناه.",
+        "ai_synthetic": (
+            "اختبار للواجهة: دُرِّب هذا النموذج على بيانات اصطناعية. التوقع "
+            "والتوصية والتفسير ليست نتائج حقيقية."
+        ),
+        "forecast": "توقع {label} بعد {h} أيام: {v:.1f} {unit}",
+        "rec_caveat": (
+            "العتبات توضيحية، ورطوبة التربة من SMAP إشارة إقليمية (~9 كم). "
+            "تحقق مع المزارع قبل الري."
+        ),
+        "shap_t": "لماذا أعطى النموذج هذا التوقع (SHAP)",
+        "shap_base": "متوسط توقع النموذج: {v:.1f}",
+        "shap_up": "{f} = {x:.2f} رفع التوقع بمقدار {v:.2f}",
+        "shap_down": "{f} = {x:.2f} خفّض التوقع بمقدار {v:.2f}",
+        "shap_imputed": " (قيمة مفقودة عُوِّضت بقيمة نموذجية)",
+        "shap_note": "توضح هذه القيم كيف يستخدم النموذج كل مدخل، وليست دليلاً على السببية.",
+        "eval_t": "تقييم النموذج (بيانات حقيقية مشتقة من ناسا)",
+        "eval_line": (
+            "متوسط خطأ التوقع (MAE) على {n} يوماً محجوزاً للاختبار ({start} إلى {end}): "
+            "النموذج {m:.2f}، مرجع «بلا تغيير» {p:.2f}، مرجع «المتوسط دائماً» {a:.2f} "
+            "نقطة مئوية من رطوبة التربة."
+        ),
+        "eval_cv_worse": (
+            "خلال فترة التدريب السابقة لم يتفوق النموذج على مرجع «بلا تغيير»، "
+            "لذا فإن أفضليته ليست موثوقة بعد."
+        ),
+        "eval_mean_close": (
+            "رطوبة التربة هنا قليلة التغير إلا بعد المطر، لذا يصعب التفوق على المراجع البسيطة."
+        ),
         "env": "بيئات التشغيل",
         "tab_earth": "الأرض",
         "tab_mars": "المريخ (مفهوم)",
@@ -476,17 +613,46 @@ st.caption(t["data_note"])
 # ======================================================================
 
 st.header(t["advisor"])
-st.caption(t["advisor_note"])
 
 i1, i2, i3 = st.columns(3)
 with i1:
-    soil = st.slider(t["in_soil"], 0, 100, 25)
+    soil = st.slider(t["in_soil"], 5.0, 35.0, 8.8, step=0.1)
 with i2:
-    temp = st.slider(t["in_temp"], 10, 55, 41)
+    temp = st.slider(t["in_temp"], 10, 50, 32)
 with i3:
-    ndvi = st.slider(t["in_ndvi"], 0.0, 1.0, 0.25, step=0.01)
+    ndvi = st.slider(t["in_ndvi"], 0.0, 1.0, 0.42, step=0.01)
+i4, i5, _ = st.columns(3)
+with i4:
+    rain = st.slider(t["in_rain"], 0, 100, 0)
+with i5:
+    et0 = st.slider(t["in_et0"], 0.0, 15.0, 6.0, step=0.1)
 
-level, reasons = get_recommendation(soil, temp, ndvi)
+ai = get_ai_assessment(soil, temp, ndvi, rain, et0)
+use_ai = ai is not None and ai["status"] == "ok" and ai["recommendation"] is not None
+
+if use_ai:
+    st.caption(t["ai_note"])
+    if ai["model"]["is_synthetic"]:
+        st.warning(t["ai_synthetic"])
+    location = ai["model"].get("data_location") or {}
+    if location.get("lat") and location.get("lon"):
+        same_site = (
+            abs(location["lat"][0] - SITE["lat"]) < 0.1
+            and abs(location["lon"][0] - SITE["lon"]) < 0.1
+        )
+        st.info(t["ai_location_ok" if same_site else "ai_location"].format(
+            site=", ".join(location.get("sites", ["?"])),
+            lat=location["lat"][0],
+            lon=location["lon"][0],
+        ))
+    level = ai["recommendation"]["level"]
+else:
+    st.caption(t["advisor_note"])
+    st.info(t["ai_missing"])
+    if ai is not None and ai["status"] in ("invalid_input", "error"):
+        st.caption("; ".join(ai["errors"]))
+    level, reasons = get_recommendation(soil, temp, ndvi)
+
 colour = {"irrigate": "#b23a22", "monitor": "#b7791f", "none": "#2f7d4f"}[level]
 
 st.markdown(
@@ -498,9 +664,65 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-st.markdown(f"**{t['why']}**")
-for key, value in reasons:
-    st.markdown(f"- {t[key].format(v=value)}" if value is not None else f"- {t[key]}")
+
+if use_ai:
+    pred = ai["prediction"]
+    st.markdown(t["forecast"].format(
+        label=t[FEATURE_TEXT[pred["target"]]],
+        h=pred["horizon_days"],
+        v=pred["value"],
+        unit="%" if pred["target"] == "soil_moisture_pct" else "",
+    ))
+    st.caption(t["rec_caveat"])
+    for warning in ai["warnings"]:
+        if "SYNTHETIC" not in warning:
+            st.caption(f"⚠ {warning}")
+
+    exp = ai["explanation"]
+    if exp:
+        st.markdown(f"**{t['shap_t']}**")
+        st.caption(t["shap_base"].format(v=exp["base_value"]))
+        for c in exp["contributions"]:
+            line = t["shap_up" if c["contribution"] >= 0 else "shap_down"].format(
+                f=t[FEATURE_TEXT[c["feature"]]], x=c["value"], v=abs(c["contribution"])
+            )
+            st.markdown(f"- {line}{t['shap_imputed'] if c['imputed'] else ''}")
+        st.bar_chart(
+            pd.DataFrame({
+                "factor": [t[FEATURE_TEXT[c["feature"]]] for c in exp["contributions"]],
+                "SHAP": [c["contribution"] for c in exp["contributions"]],
+            }),
+            x="factor",
+            y="SHAP",
+            horizontal=True,
+        )
+        st.caption(t["shap_note"])
+
+    # Metrics are shown only for a model trained on real data.
+    evaluation = model_status()["evaluation"]
+    if evaluation.get("status") == "ok" and not evaluation.get("is_synthetic"):
+        try:
+            metrics = evaluation["test_metrics"]
+            eval_text = t["eval_line"].format(
+                n=evaluation["n_test"],
+                start=evaluation["test_period"][0],
+                end=evaluation["test_period"][1],
+                m=metrics["random_forest"]["mae"],
+                p=metrics["baseline_persistence"]["mae"],
+                a=metrics["baseline_training_mean"]["mae"],
+            )
+        except (KeyError, TypeError, IndexError):
+            eval_text = None  # evaluation file has an unexpected layout: show nothing
+        if eval_text:
+            with st.expander(t["eval_t"]):
+                st.write(eval_text)
+                if evaluation.get("model_beats_persistence_in_cv") is False:
+                    st.caption(t["eval_cv_worse"])
+                st.caption(t["eval_mean_close"])
+else:
+    st.markdown(f"**{t['why']}**")
+    for key, value in reasons:
+        st.markdown(f"- {t[key].format(v=value)}" if value is not None else f"- {t[key]}")
 
 # ======================================================================
 # OPERATING ENVIRONMENTS

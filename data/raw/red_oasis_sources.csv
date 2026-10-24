@@ -1,0 +1,16 @@
+﻿column,meaning_ar,meaning_en,unit,source,product,resolution,link,notes
+date,التاريخ,Date,YYYY-MM-DD,—,—,daily,—,
+rain_gpm_mm,الأمطار اليومية,Daily precipitation,mm/day,NASA GPM IMERG (GES DISC),GPM_3IMERGDL V07 (Late),0.1° (~10 km),https://gpm.nasa.gov/data/imerg,rain_source shows if a day came from POWER instead
+rain_suspect,علامة مطر مشكوك فيه,Suspicious rain flag,0/1,Quality check,GPM rain >20 mm with no SMAP rise and humidity <50%,daily,—,Exclude flagged days when training
+temp_mean_c,متوسط الحرارة,Mean air temp at 2 m,°C,NASA POWER,T2M,0.5°×0.625°,https://power.larc.nasa.gov,
+temp_max_c,الحرارة العظمى,Max air temp at 2 m,°C,NASA POWER,T2M_MAX,0.5°×0.625°,https://power.larc.nasa.gov,
+temp_min_c,الحرارة الصغرى,Min air temp at 2 m,°C,NASA POWER,T2M_MIN,0.5°×0.625°,https://power.larc.nasa.gov,
+humidity_pct,رطوبة الجو,Relative humidity at 2 m,%,NASA POWER,RH2M,0.5°×0.625°,https://power.larc.nasa.gov,
+wind_2m_ms,سرعة الرياح,Wind speed at 2 m,m/s,NASA POWER,WS2M,0.5°×0.625°,https://power.larc.nasa.gov,
+solar_mj_m2,الإشعاع الشمسي,All-sky surface shortwave radiation,MJ/m²/day,NASA POWER,ALLSKY_SFC_SW_DWN,1°,https://power.larc.nasa.gov,
+pressure_kpa,الضغط الجوي,Surface pressure,kPa,NASA POWER,PS,0.5°×0.625°,https://power.larc.nasa.gov,
+et0_mm,التبخر-نتح المرجعي (احتياج الماء الأساسي),Reference evapotranspiration,mm/day,Calculated from NASA POWER,FAO-56 Penman-Monteith,daily,https://www.fao.org/4/x0490e/x0490e00.htm,Crop water need = ET0 × Kc (crop coefficient from Sharifa)
+soil_moisture_raw,رطوبة التربة (القراءات الأصلية),"Surface soil moisture, raw",m³/m³,NASA SMAP via AppEEARS,"SPL3SMP_E.006: Soil_Moisture_Retrieval_Data_AM_soil_moisture, Soil_Moisture_Retrieval_Data_PM_soil_moisture_pm",9 km,https://nsidc.org/data/spl3smp_e,Mean of AM+PM passes; satellite passes every 2-3 days
+soil_moisture,رطوبة التربة (معبأة),"Surface soil moisture, gap-filled",m³/m³,Derived,linear interpolation ≤3 days,9 km,—,soil_moisture_is_filled = 1 for filled days
+ndvi_raw,مؤشر الغطاء النباتي (الأصلي),"NDVI, raw composites",unitless (-1..1),NASA MODIS / VIIRS via AppEEARS,MOD13Q1.061: _250m_16_days_NDVI; VNP13A1.002: 500_m_16_days_NDVI,250 m (MODIS) / 500 m (VIIRS),https://lpdaac.usgs.gov,16-day composites; VIIRS fills MODIS gaps
+ndvi,مؤشر الغطاء النباتي (يومي),"NDVI, daily interpolated",unitless,Derived,linear interpolation ≤20 days,—,—,ndvi_is_interpolated = 1 for interpolated days

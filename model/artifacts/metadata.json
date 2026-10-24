@@ -1,0 +1,150 @@
+{
+  "model_type": "RandomForestRegressor (scikit-learn) with median imputation",
+  "status_label": "experimental",
+  "reliable": false,
+  "recommendations_validated": false,
+  "target": "soil_moisture_pct",
+  "target_label": "Soil moisture",
+  "target_unit": "% volumetric",
+  "target_description": "Observed SMAP soil moisture 3 days after the input date (a regional ~9 km signal). Not crop stress, irrigation demand or yield.",
+  "horizon_days": 3,
+  "features": {
+    "soil_moisture_pct": {
+      "label": "Soil moisture",
+      "unit": "% volumetric (SMAP m3/m3 x 100), observed today",
+      "min": 0.0,
+      "max": 100.0,
+      "source": "NASA SMAP SPL3SMP_E (9 km)"
+    },
+    "ndvi": {
+      "label": "Vegetation index (NDVI)",
+      "unit": "unitless, -1 to 1 (latest composite already available)",
+      "min": -1.0,
+      "max": 1.0,
+      "source": "MODIS MOD13Q1 / VIIRS VNP13A1"
+    },
+    "rainfall_7d_mm": {
+      "label": "Rainfall, last 7 days",
+      "unit": "mm (sum of the 7 daily totals up to today)",
+      "min": 0.0,
+      "max": 2000.0,
+      "source": "NASA GPM IMERG Late V07"
+    },
+    "temperature_c": {
+      "label": "Air temperature",
+      "unit": "deg C (daily mean at 2 m)",
+      "min": -30.0,
+      "max": 65.0,
+      "source": "NASA POWER T2M"
+    },
+    "et0_mm": {
+      "label": "Reference evapotranspiration (ET0)",
+      "unit": "mm/day (FAO-56 Penman-Monteith from NASA POWER)",
+      "min": 0.0,
+      "max": 25.0,
+      "source": "Derived from NASA POWER (temperature, humidity, wind, radiation)"
+    }
+  },
+  "feature_order": [
+    "soil_moisture_pct",
+    "ndvi",
+    "rainfall_7d_mm",
+    "temperature_c",
+    "et0_mm"
+  ],
+  "unavailable_features": [],
+  "training_range": {
+    "soil_moisture_pct": {
+      "min": 6.909999999999999,
+      "max": 27.400000000000002
+    },
+    "ndvi": {
+      "min": 0.1673,
+      "max": 0.5383
+    },
+    "rainfall_7d_mm": {
+      "min": 0.0,
+      "max": 166.56
+    },
+    "temperature_c": {
+      "min": 13.69,
+      "max": 39.89
+    },
+    "et0_mm": {
+      "min": 1.73,
+      "max": 11.73
+    }
+  },
+  "training_median": {
+    "soil_moisture_pct": 8.790000000000001,
+    "ndvi": 0.4303,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 28.75,
+    "et0_mm": 5.915
+  },
+  "target_distribution": {
+    "p5": 7.870000000000001,
+    "p50": 8.745000000000001,
+    "p95": 12.395999999999994
+  },
+  "n_rows": 608,
+  "date_range": [
+    "2024-01-08",
+    "2026-09-27"
+  ],
+  "data_source": "NASA-derived daily CSV: red_oasis_daily.csv",
+  "data_location": {
+    "sites": [
+      "Farm_23.3086_56.6131"
+    ],
+    "lat": [
+      23.308639
+    ],
+    "lon": [
+      56.613083
+    ]
+  },
+  "agreed_site": {
+    "name": "Dariz palm oasis, Ibri",
+    "lat": 23.308639,
+    "lon": 56.613083
+  },
+  "is_synthetic": false,
+  "global_importance": [
+    {
+      "feature": "soil_moisture_pct",
+      "label": "Soil moisture",
+      "mean_abs_shap": 0.3669629510620725
+    },
+    {
+      "feature": "rainfall_7d_mm",
+      "label": "Rainfall, last 7 days",
+      "mean_abs_shap": 0.2699873839718173
+    },
+    {
+      "feature": "ndvi",
+      "label": "Vegetation index (NDVI)",
+      "mean_abs_shap": 0.14338663648644162
+    },
+    {
+      "feature": "temperature_c",
+      "label": "Air temperature",
+      "mean_abs_shap": 0.14330105315750208
+    },
+    {
+      "feature": "et0_mm",
+      "label": "Reference evapotranspiration (ET0)",
+      "mean_abs_shap": 0.1076893487515683
+    }
+  ],
+  "trained_at": "2026-10-24T10:19:56+00:00",
+  "library_versions": {
+    "python": "3.12.3",
+    "scikit-learn": "1.9.1",
+    "shap": "0.54.1",
+    "numpy": "2.4.4",
+    "pandas": "3.0.2",
+    "joblib": "1.5.3"
+  },
+  "note": "Saved model is refit on all usable rows after the held-out evaluation."
+}
