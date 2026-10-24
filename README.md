@@ -1,29 +1,15 @@
-# Red Oasis 🌱
+# Red Oasis
 
-> **A Smart Agriculture Advisor Powered by NASA Data — From the Omani Desert to Mars.**
+A NASA-data-informed agriculture advisor for Oman, with an illustrative Mars water-management mode.
 
----
+**Live app:** https://red-oasis.streamlit.app/
 
-## 📌 Overview
-**Red Oasis** is a web-based decision support system designed for extreme agriculture. By utilizing open-source Earth observation data from NASA, Red Oasis predicts crop water stress, optimizes irrigation scheduling, and explains recommendations to farmers using explainable AI (XAI). 
+**Run locally:** `python -m streamlit run app/app.py`
 
-Additionally, Red Oasis features a conceptual **Mars Mode** to assist astronauts in managing closed-loop agricultural environments in space.
+**Data sources:** NASA Earth observation data and published agricultural research.
 
----
+**Model status:** The machine-learning model is experimental; predictions require further validation.
 
-## 🎯 Key Features
-* 📡 **NASA Earth Data Integration:** Utilizes remote sensing data (SMAP soil moisture, MODIS/VIIRS NDVI, GPM precipitation, ECOSTRESS water stress, and NASA POWER climate metrics).
-* 🤖 **Predictive AI:** Machine learning models forecasting crop water stress days in advance.
-* 💡 **Explainable AI (XAI):** Built-in SHAP explanations providing transparent rationale behind every irrigation advice.
-* 🚀 **Dual-Environment (Earth & Space):** Dedicated mode tailored for simulated closed-system farming on the Moon and Mars.
-* 🌍 **Local Relevance:** Optimized for arid climate conditions in Oman and desert regions.
+**Team:** Asma (App Builder), Amna (NASA Data), Yaqeen (ML Model), Shareefa (Field Research), Jumana (Storytelling and Presentation).
 
----
-
-## 🛠️ Project Structure
-```text
-red-oasis/
-├── app/        # Streamlit user interface & web app code
-├── data/       # Data ingestion, spatial inputs, & preprocessing scripts
-├── model/      # Machine learning models, training scripts, & SHAP explainers
-└── docs/       # Documentation, project slides, and research assets
+**Demo video (60 seconds):** [Watch on Google Drive] https://drive.google.com/file/d/1jPH7NvLFWnesFxPjYfnqHF8l89gn0lya/view?usp=drive_link
