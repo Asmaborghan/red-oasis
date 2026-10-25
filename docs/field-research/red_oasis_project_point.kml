@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Red Oasis - candidate point in Ad Dariz agricultural area</name>
+    <description>Candidate point in Ad Dariz agricultural area, Ibri: 23.308639 N, 56.613083 E. Historic Falaj al-Dariz cultivated area was 255.44 ha from MRMEWR (2001) GPS/GIS survey as reported by Al-Ghafri; this is not the current orchard acreage. Published Oman irrigation comparator (Al Kamil and Al Wafi, 2015-2016; publication 2022): subsurface drip at 60% ETc used 6,420.6 m3/ha/year with 78.3 kg/palm versus bubbler at 9,966.154 m3/ha/year and 79.0 kg/palm. Exact selected grove boundary and contemporary Dariz irrigation quantities remain unknown.</description>
+    <Placemark>
+      <name>Candidate study point - orchard to confirm</name>
+      <description>23.308639 N, 56.613083 E. Imagery shows cultivated land around the marker, but the orchard-level boundary and crop identity at this exact pin remain unverified.</description>
+      <Point><coordinates>56.613083,23.308639,0</coordinates></Point>
+    </Placemark>
+  </Document>
+</kml>

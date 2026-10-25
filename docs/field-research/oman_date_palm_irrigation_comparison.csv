@@ -1,0 +1,6 @@
+site,measurement_period,publication_year,crop,system,treatment,water_m3_per_ha_per_year,yield_kg_per_palm,notes
+"Falaj al-Dariz, Ibri",2002-2003,2006,Date palm,Falaj irrigation,Observed study water supply incl. effective rainfall,32350,,Historical study; 3235 mm/year converted using 10 m3/ha per mm; not current parcel data
+"Al Kamil and Al Wafi Agricultural Research Station, South Al Sharqiyah",2015-2016,2022,Khalas date palm,Bubbler irrigation,100% crop water requirement,9966.154,79.0,Comparator trial; yield baseline
+"Al Kamil and Al Wafi Agricultural Research Station, South Al Sharqiyah",2015-2016,2022,Khalas date palm,Subsurface drip (emitters at 40 cm),60% ETc,6420.6,78.3,35.6% less water than bubbler; no significant yield difference reported
+"Al Kamil and Al Wafi Agricultural Research Station, South Al Sharqiyah",2015-2016,2022,Khalas date palm,Subsurface drip (emitters at 40 cm),40% ETc,4239.704,69.8,Yield lower than bubbler baseline
+"Al Kamil and Al Wafi Agricultural Research Station, South Al Sharqiyah",2015-2016,2022,Khalas date palm,Subsurface drip (emitters at 40 cm),20% ETc,2400.681,68.8,Yield lower than bubbler baseline

@@ -35,13 +35,13 @@ except Exception:  # the rule is optional: the website keeps working without it
 # ======================================================================
 
 SITE = {
-    "name": {"en": "Dariz Oasis", "ar": "واحة الدريز"},
+    "name": {"en": "Ad Dariz agricultural area", "ar": "منطقة الدريز الزراعية"},
     "region": {"en": "Ibri, Ad Dhahirah", "ar": "عبري، الظاهرة"},
     "lat": 23.308639,
     "lon": 56.613083,
     "verified": True,
     "crop": {"en": "Date palm", "ar": "نخيل التمر"},
-    "area_ha": 21.6,  # rough map measurement; boundary needs GIS confirmation
+    "area_ha": None,  # not established: the 255.44 ha in the research brief is the whole historic falaj, not this point
 }
 
 # Illustrative thresholds for the demonstration advisor.
@@ -246,7 +246,7 @@ TEXT = {
         "site_status": "Location status",
         "crop_tbc": "To be confirmed",
         "pending": "Pending verification",
-        "verified": "Verified",
+        "verified": "Satellite-reviewed candidate point",
         "coords": "Latitude {lat:.5f}, longitude {lon:.5f}",
         "site_note": "Coordinates are provisional until confirmed on satellite imagery.",
         "data": "NASA data sources",
@@ -293,7 +293,7 @@ TEXT = {
             "not read live from NASA services. Air temperature is treated as the daily mean."
         ),
         "ai_location_ok": (
-            "The model was trained on NASA data for the Dariz farm point "
+            "The model was trained on NASA data for the Ad Dariz study point "
             "({lat:.2f}° N, {lon:.2f}° E). SMAP soil moisture is a regional (~9 km) "
             "signal, and the model is experimental."
         ),
@@ -448,7 +448,7 @@ TEXT = {
         "site_status": "حالة الموقع",
         "crop_tbc": "يُحدَّد لاحقاً",
         "pending": "بانتظار التحقق",
-        "verified": "تم التحقق",
+        "verified": "نقطة مرشحة روجعت على صور الأقمار الصناعية",
         "coords": "خط العرض {lat:.5f}، خط الطول {lon:.5f}",
         "site_note": "الإحداثيات مؤقتة إلى أن تُؤكَّد على صور الأقمار الصناعية.",
         "data": "مصادر بيانات ناسا",
@@ -495,7 +495,7 @@ TEXT = {
             "من خدمات ناسا. تُعامل درجة الحرارة على أنها المتوسط اليومي."
         ),
         "ai_location_ok": (
-            "دُرِّب النموذج على بيانات ناسا لنقطة مزرعة الدريز "
+            "دُرِّب النموذج على بيانات ناسا لنقطة الدراسة في منطقة الدريز "
             "({lat:.2f}° شمالاً، {lon:.2f}° شرقاً). رطوبة التربة من SMAP إشارة "
             "إقليمية (نحو 9 كم)، والنموذج تجريبي."
         ),
