@@ -55,9 +55,15 @@ def column_mapping(columns) -> dict[str, str | None]:
 
 
 def unconfirmed_agreed_columns(columns) -> list[str]:
-    """Columns using an agreed-schema spelling that is not mapped yet."""
+    """Columns using an agreed-schema spelling that is not mapped yet.
+
+    Internal canonical names (e.g. "solar_radiation", which load_raw() gives
+    to solar_mj_m2) are skipped: a frame that is already standardised must
+    not be reported as using an unconfirmed spelling.
+    """
     lower = {str(c).strip().lower(): c for c in columns}
-    return [lower[c] for c in config.UNCONFIRMED_AGREED_COLUMNS if c in lower]
+    return [lower[c] for c in config.UNCONFIRMED_AGREED_COLUMNS
+            if c in lower and c not in config.COLUMN_ALIASES]
 
 
 def validate_raw(df: pd.DataFrame) -> dict:

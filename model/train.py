@@ -329,7 +329,9 @@ def train(raw: pd.DataFrame, target: str, horizon_days: int, out_dir: Path,
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description="Train the Red Oasis forecast model.")
     p.add_argument("--data", type=Path, default=config.DEFAULT_DATA_FILE,
-                   help="Daily CSV (default: data/raw/red_oasis_daily.csv)")
+                   help="Daily CSV with the same columns, e.g. "
+                        "data/raw/red_oasis_daily_2015_2026.csv "
+                        "(default: data/raw/red_oasis_daily.csv)")
     p.add_argument("--inspect", action="store_true", help="Only report what the CSV contains")
     p.add_argument("--target", default=config.DEFAULT_TARGET, choices=list(config.TARGETS))
     p.add_argument("--horizon", type=int, help="Days ahead to forecast")
@@ -355,7 +357,10 @@ def main(argv=None) -> int:
         raw = data.load_raw(args.data)
         out = args.out or config.DEFAULT_MODEL_DIR
         source, synthetic = f"NASA-derived daily CSV: {args.data.name}", False
-        audit_path = config.ROW_AUDIT_FILE
+        # The row audit always goes next to the model it describes, so a run
+        # with --out never overwrites the production audit in model/artifacts/.
+        audit_path = Path(out) / config.ROW_AUDIT_FILE.name
+        print(f"Training on {args.data} -> {out}")
 
     try:
         evaluation = train(raw, args.target, horizon, out, source, synthetic, audit_path)

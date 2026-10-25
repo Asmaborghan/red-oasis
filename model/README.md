@@ -35,6 +35,35 @@ Rows used: 608 of 1,004 (484 train, 122 final test).
 - Tests: the Nizwa-specific expected values in `tests/test_real_data.py` were
   replaced by values read from the data file. 79 passed, 1 skipped.
 
+## Week 3 additions (25–29 Oct 2026, Yaqeen)
+
+| File | What it is |
+|---|---|
+| `MODEL_CARD.md` | One-page model card in plain language |
+| `IRRIGATION_RULE.md` + `irrigation.py` | Provisional irrigation rule: forecast + soil now + rain + ET0 → irrigate / monitor / none (`advise()`) |
+| `figures/fig1_forecast_vs_actual.png` | 3-day forecast vs observed soil moisture, final test period |
+| `figures/fig2_error_rain_vs_no_rain.png` | Error with and without recent rain |
+| `figures/fig3_shap_summary.png` | SHAP summary, test rows |
+| `figures/figures_data.json` | The numbers behind the three figures |
+| `figures.py` | Redraws the figures: `python -m model.figures` (needs `pip install matplotlib`) |
+| `CHALLENGE_CLAIMS_CHECKLIST.md` | Current model claims, to check against the official challenge text (pending) |
+
+**Changes:**
+- `python -m model.train --data <file>` trains on any daily CSV with the same
+  columns, such as Amna's coming `red_oasis_daily_2015_2026.csv`.
+- With `--out`, the row audit is now written next to that model. Before, it
+  was always written to `model/artifacts/`.
+- `data.unconfirmed_agreed_columns()` no longer reports the internal column
+  name `solar_radiation`. This removes the false warning stored in the
+  24 Oct `evaluation.json`.
+
+**Checks run:**
+- A rerun on the current Dariz file reproduced every saved metric exactly.
+- The website's thresholds are now 8.4% / 9.3% (Dariz site percentiles), so
+  the "30% / 45%" sentence above is out of date. The forecast alone never fell
+  below 8.4% on the test days.
+- Tests (24 Oct): **101 passed** with the data file.
+
 ## What the model predicts
 
 The model forecasts **observed SMAP surface soil moisture (% volumetric) 3 days ahead**.

@@ -12,6 +12,10 @@ that still needs a real value.
 import sys
 from pathlib import Path
 
+import base64
+import io
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
@@ -21,6 +25,10 @@ try:
     from model.predict import model_status, predict
 except Exception:  # keep the website working if ML packages are missing
     predict = model_status = None
+try:
+    from model.irrigation import advise
+except Exception:  # the rule is optional: the website keeps working without it
+    advise = None
 
 # ======================================================================
 # CONFIGURATION
@@ -170,6 +178,28 @@ def get_ai_assessment(soil: float, temp: float, ndvi: float, rain: float, et0: f
     )
 
 
+def get_rule_assessment(soil: float, temp: float, ndvi: float, rain: float, et0: float):
+    """Call Yaqeen's provisional irrigation rule (model/irrigation.py).
+    Returns its result dict, or None if it is unavailable or not usable."""
+    if advise is None:
+        return None
+    try:
+        out = advise(
+            {
+                "soil_moisture_pct": soil,
+                "ndvi": ndvi,
+                "rainfall_7d_mm": rain,
+                "temperature_c": temp,
+                "et0_mm": et0,
+            }
+        )
+    except Exception:
+        return None
+    if out.get("status") == "ok" and out.get("level") in ("irrigate", "monitor", "none"):
+        return out
+    return None
+
+
 # Model feature name -> TEXT key for its display label.
 FEATURE_TEXT = {
     "soil_moisture_pct": "soil",
@@ -201,7 +231,7 @@ TEXT = {
         "approach_t": "Our approach",
         "approach": (
             "We combine satellite measurements of soil moisture, vegetation, "
-            "rainfall and weather to estimate crop water stress and advise "
+            "rainfall and weather to forecast soil moisture and advise "
             "when to irrigate."
         ),
         "explain_t": "Explainable decisions",
@@ -325,6 +355,28 @@ TEXT = {
         "m_temp": "Temperature control",
         "m_crop": "Crop water demand",
         "m_pending": "Pending",
+        "rule_t": "How the level was decided (provisional rule)",
+        "rule_caveat": (
+            "The level comes from a provisional rule that compares today's soil "
+            "moisture, the forecast, recent rain and ET0 with this site's own "
+            "satellite record. It is not validated irrigation advice. Confirm "
+            "with the grower before acting."
+        ),
+        "chk_soil_now_dry": "Soil moisture now {v:.1f}% vs site median {r:.1f}%",
+        "chk_forecast_dry": "Forecast in 3 days {v:.1f}% vs site median {r:.1f}%",
+        "chk_rain_below_demand": "Rain in the last 7 days {v:.1f} mm vs 3-day water demand {r:.1f} mm (3 × ET0)",
+        "chk_high_demand": "ET0 today {v:.1f} mm/day vs site median {r:.1f} mm/day",
+        "chk_yes": "points to irrigation",
+        "chk_no": "does not",
+        "chk_skipped": "Check skipped: an input is missing.",
+        "limits": "Project limits",
+        "lim1": "Regional, not field-level. One SMAP value covers about 9 km; it describes the surrounding surface soil, not the root zone of irrigated palms, and it cannot see falaj water inside the orchard.",
+        "lim2": "The model forecasts soil moisture three days ahead. It does not measure crop stress, irrigation need or yield.",
+        "lim3": "The forecast is nearly flat and misses sudden rain events. The model is experimental: in cross-validation it did not beat the simple 'same as today' forecast.",
+        "lim4": "Short record: under three years for one location (2024-2026). A longer record is being prepared.",
+        "lim5": "The irrigation levels come from a provisional rule relative to this site's satellite record. No field measurements or grower logs exist to validate it.",
+        "lim6": "SHAP shows how the model uses each input, not what physically changes the soil.",
+        "lim7": "The Mars mode is a concept built on NASA reference values and team assumptions, not a simulation.",
         "evid": "Site evidence",
         "evid_note": (
             "Published study of Falaj al-Dariz (Al-Ghafri, 2006; observations "
@@ -382,7 +434,7 @@ TEXT = {
         "approach_t": "منهجنا",
         "approach": (
             "ندمج قياسات الأقمار الصناعية لرطوبة التربة والغطاء النباتي "
-            "والأمطار والطقس لتقدير الإجهاد المائي للمحصول والتوصية بموعد الري."
+            "والأمطار والطقس لتوقّع رطوبة التربة والتوصية بموعد الري."
         ),
         "explain_t": "قرارات قابلة للتفسير",
         "explain": (
@@ -497,6 +549,27 @@ TEXT = {
         "m_temp": "التحكم بالحرارة",
         "m_crop": "احتياج المحصول من المياه",
         "m_pending": "قيد التحديد",
+        "rule_t": "كيف تحدد المستوى (قاعدة مؤقتة)",
+        "rule_caveat": (
+            "يأتي المستوى من قاعدة مؤقتة تقارن رطوبة التربة اليوم والتوقع والمطر "
+            "الأخير والتبخر-نتح بسجل الأقمار الصناعية لهذا الموقع نفسه. وهي ليست "
+            "نصيحة ري موثقة. تأكد من المزارع قبل التنفيذ."
+        ),
+        "chk_soil_now_dry": "رطوبة التربة الآن {v:.1f}% مقابل وسيط الموقع {r:.1f}%",
+        "chk_forecast_dry": "التوقع بعد 3 أيام {v:.1f}% مقابل وسيط الموقع {r:.1f}%",
+        "chk_rain_below_demand": "أمطار آخر 7 أيام {v:.1f} ملم مقابل احتياج 3 أيام {r:.1f} ملم (3 × ET0)",
+        "chk_high_demand": "التبخر-نتح اليوم {v:.1f} ملم/يوم مقابل وسيط الموقع {r:.1f} ملم/يوم",
+        "chk_yes": "يشير إلى الري",
+        "chk_no": "لا يشير إلى الري",
+        "chk_skipped": "تم تخطي الفحص: مدخل ناقص.",
+        "limits": "حدود المشروع",
+        "lim1": "إقليمي وليس على مستوى الحقل. قيمة SMAP الواحدة تغطي نحو 9 كم، وتصف التربة السطحية المحيطة لا منطقة جذور النخيل المروي، ولا ترى مياه الفلج داخل البستان.",
+        "lim2": "النموذج يتوقع رطوبة التربة بعد ثلاثة أيام. ولا يقيس إجهاد المحصول أو الحاجة للري أو الإنتاج.",
+        "lim3": "التوقع شبه ثابت ويفوّت أحداث المطر المفاجئة. والنموذج تجريبي: لم يتفوق في التحقق المتقاطع على توقع «مثل اليوم» البسيط.",
+        "lim4": "سجل قصير: أقل من ثلاث سنوات لموقع واحد (2024-2026). ويجري تجهيز سجل أطول.",
+        "lim5": "مستويات الري تأتي من قاعدة مؤقتة نسبةً إلى سجل الأقمار الصناعية لهذا الموقع. ولا توجد قياسات حقلية أو سجلات مزارعين للتحقق منها.",
+        "lim6": "يوضح SHAP كيف يستخدم النموذج كل مدخل، لا ما يغيّر التربة فيزيائياً.",
+        "lim7": "وضع المريخ مفهوم مبني على قيم مرجعية من ناسا وافتراضات الفريق، وليس محاكاة.",
         "evid": "أدلة الموقع",
         "evid_note": (
             "دراسة منشورة عن فلج الدريز (الغافري، 2006؛ ملاحظات 2002-2003). "
@@ -544,7 +617,27 @@ TEXT = {
 # PAGE SETUP AND STYLE
 # ======================================================================
 
-st.set_page_config(page_title="Red Oasis", layout="wide")
+# Team logo (optional: the page still works if the file is missing).
+LOGO_PATH = Path(__file__).parent / "assets" / "red_oasis_logo_v3_patch.png"
+
+
+def load_logo():
+    """Return (PIL image for the browser tab, base64 PNG for the banner) or (None, '')."""
+    try:
+        from PIL import Image
+
+        image = Image.open(LOGO_PATH).convert("RGBA")
+        small = image.resize((192, 192))
+        buffer = io.BytesIO()
+        small.save(buffer, format="PNG")
+        return image.resize((64, 64)), base64.b64encode(buffer.getvalue()).decode("ascii")
+    except Exception:
+        return None, ""
+
+
+LOGO_ICON, LOGO_B64 = load_logo()
+
+st.set_page_config(page_title="Red Oasis", page_icon=LOGO_ICON, layout="wide")
 
 STYLE = """
 <style>
@@ -553,7 +646,9 @@ html, body, .stApp, .stApp * { font-family: 'IBM Plex Sans', 'IBM Plex Sans Arab
 .stApp [data-testid="stIconMaterial"], .stApp span[class*="material-symbols"], .stApp span[class*="material-icons"] { font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', 'Material Icons' !important; }
 .block-container { max-width: 1080px; padding-top: 1.5rem; }
 header[data-testid="stHeader"] { background: transparent; }
-.ro-hero { background: #0f2347; color: #ffffff; padding: 2.2rem 2rem; border-radius: 6px; margin: 0.5rem 0 1.6rem 0; }
+.ro-hero { background: #0f2347; color: #ffffff; padding: 2.2rem 2rem; border-radius: 6px; margin: 0.5rem 0 1.6rem 0; display: flex; align-items: center; gap: 1.6rem; }
+.ro-hero img { width: 112px; height: 112px; flex-shrink: 0; }
+@media (max-width: 640px) { .ro-hero { flex-direction: column; align-items: flex-start; } .ro-hero img { width: 84px; height: 84px; } }
 .ro-hero h1 { color: #ffffff; font-size: 2.6rem; font-weight: 700; margin: 0 0 0.2rem 0; padding: 0; }
 .ro-hero .tag { color: #e8b08a; font-size: 1.1rem; margin-bottom: 0.9rem; }
 .ro-hero .sub { color: #d6def0; font-size: 1.05rem; max-width: 40rem; margin-bottom: 1rem; }
@@ -598,13 +693,20 @@ if lang == "ar":
 # HERO
 # ======================================================================
 
+logo_html = (
+    f'<img src="data:image/png;base64,{LOGO_B64}" alt="Red Oasis logo">' if LOGO_B64 else ""
+)
+
 st.markdown(
     f"""
     <div class="ro-hero">
-        <h1>Red Oasis</h1>
-        <div class="tag">{t['tagline']}</div>
-        <div class="sub">{t['subtitle']}</div>
-        <div class="badge">{t['badge']}</div>
+        {logo_html}
+        <div>
+            <h1>Red Oasis</h1>
+            <div class="tag">{t['tagline']}</div>
+            <div class="sub">{t['subtitle']}</div>
+            <div class="badge">{t['badge']}</div>
+        </div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -741,6 +843,7 @@ with i5:
 
 ai = get_ai_assessment(soil, temp, ndvi, rain, et0)
 use_ai = ai is not None and ai["status"] == "ok" and ai["recommendation"] is not None
+rule = get_rule_assessment(soil, temp, ndvi, rain, et0) if use_ai else None
 
 if use_ai:
     st.caption(t["ai_note"])
@@ -757,7 +860,7 @@ if use_ai:
             lat=location["lat"][0],
             lon=location["lon"][0],
         ))
-    level = ai["recommendation"]["level"]
+    level = rule["level"] if rule else ai["recommendation"]["level"]
 else:
     st.caption(t["advisor_note"])
     st.info(t["ai_missing"])
@@ -785,10 +888,19 @@ if use_ai:
         v=pred["value"],
         unit="%" if pred["target"] == "soil_moisture_pct" else "",
     ))
-    st.caption(t["rec_caveat"])
+    st.caption(t["rule_caveat"] if rule else t["rec_caveat"])
     for warning in ai["warnings"]:
         if "SYNTHETIC" not in warning:
             st.caption(f"⚠ {warning}")
+
+    if rule:
+        st.markdown(f"**{t['rule_t']}**")
+        for check in rule["rule"]["checks"]:
+            if check["met"] is None:
+                st.markdown(f"- {t['chk_skipped']}")
+            else:
+                text = t["chk_" + check["name"]].format(v=check["value"], r=check["reference"])
+                st.markdown(f"- {text} ({t['chk_yes'] if check['met'] else t['chk_no']})")
 
     exp = ai["explanation"]
     if exp:
@@ -838,6 +950,14 @@ else:
 
 # ======================================================================
 # OPERATING ENVIRONMENTS
+# ======================================================================
+# PROJECT LIMITS
+# ======================================================================
+
+st.header(t["limits"])
+for _key in ("lim1", "lim2", "lim3", "lim4", "lim5", "lim6", "lim7"):
+    st.markdown(f"- {t[_key]}")
+
 # ======================================================================
 
 st.header(t["env"])
