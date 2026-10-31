@@ -2,6 +2,8 @@
 
 A NASA-data-informed irrigation advisor for date-palm farming in Oman, with an illustrative Mars water-management mode. Built for the NASA Space Apps Challenge 2026 (theme: The Next Frontier).
 
+**Challenge:** Field Shift: Adapting Farms with NASA Data. Red Oasis combines NASA Earth observations, local soil and crop information from published studies, and a farmer-priority control (how much yield loss is acceptable to save water). Date palm is a perennial tree crop, so crop rotation does not apply here; the project addresses water conservation and adaptation through irrigation decisions.
+
 **Live app:** https://red-oasis.streamlit.app/
 
 **Demo video (60 seconds):** [Watch on Google Drive](https://drive.google.com/file/d/1jPH7NvLFWnesFxPjYfnqHF8l89gn0lya/view?usp=drive_link)

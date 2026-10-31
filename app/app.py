@@ -16,6 +16,7 @@ import base64
 import io
 from pathlib import Path
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -76,6 +77,10 @@ CROP_RESEARCH = {
     "subsurface_drip_60pct_etc_yield_kg_per_palm": 78.3,
     "subsurface_drip_40pct_etc_yield_kg_per_palm": 69.8,
     "subsurface_drip_20pct_etc_yield_kg_per_palm": 68.8,
+    "subsurface_drip_40pct_etc_water_m3_ha_year": 4240,
+    "subsurface_drip_20pct_etc_water_m3_ha_year": 2401,
+    # Falaj al-Dariz demand/supply ratio by calendar month (Al-Ghafri, 2006; May 2002-April 2003)
+    "monthly_demand_supply_ratio": [0.58, 0.56, 0.90, 1.30, 1.23, 1.52, 1.51, 1.45, 1.33, 1.22, 1.12, 0.49],
 }
 
 
@@ -355,6 +360,65 @@ TEXT = {
         "m_temp": "Temperature control",
         "m_crop": "Crop water demand",
         "m_pending": "Pending",
+        "badge_field": "Prototype for the NASA Space Apps Challenge 2026 (Field Shift)",
+        "chal": "How Red Oasis answers the Field Shift challenge",
+        "chal_intro": (
+            "The challenge asks for a decision-support tool that combines NASA Earth "
+            "observations with local soil information, crop characteristics and farmer "
+            "priorities, to help farmers explore strategies that conserve water and "
+            "adapt to changing conditions."
+        ),
+        "chal_c1": "The challenge asks for",
+        "chal_c2": "How Red Oasis answers",
+        "chal_c3": "Status",
+        "chal_r1a": "NASA Earth observations",
+        "chal_r1b": "SMAP soil moisture, MODIS/VIIRS vegetation, GPM rainfall and NASA POWER weather feed a model that forecasts soil moisture three days ahead (Irrigation advisor).",
+        "chal_r1c": "Working (experimental)",
+        "chal_r2a": "Local soil information",
+        "chal_r2b": "Ad Dariz soil is mainly clay loam with a field capacity of about 22% by volume (Al-Ghafri, 2006). Soil-specific thresholds still need field calibration.",
+        "chal_r2c": "Context only",
+        "chal_r3a": "Crop characteristics",
+        "chal_r3b": "Date palm: annual water demand and the seasonal shortage from the published Falaj al-Dariz study (Site evidence).",
+        "chal_r3c": "Working (published data)",
+        "chal_r4a": "Farmer priorities",
+        "chal_r4b": "The farmer sets how much yield loss is acceptable in order to save water (Strategy explorer).",
+        "chal_r4c": "Working (published data)",
+        "chal_r5a": "Explore strategies and adapt to changing conditions",
+        "chal_r5b": "Irrigation timing advice, a comparison of irrigation strategies from an Omani trial, and a water what-if for a closed-environment (Mars) concept.",
+        "chal_r5c": "Working, plus a concept",
+        "chal_note": (
+            "Date palm is a perennial tree crop, so crop rotation does not apply at this "
+            "site. We address the challenge's goals of water conservation and adaptation "
+            "through irrigation decisions. Rotation planning would be the next step for "
+            "annual crops."
+        ),
+        "seas_t": "Seasonal pattern at Falaj al-Dariz (2002-2003)",
+        "seas_note": "Demand / supply ratio by month. Above 1 means demand exceeded supply (shortage); below 1 means supply exceeded demand.",
+        "seas_short": "Shortage from April to November; surplus from December to February.",
+        "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "strat": "Strategy explorer: irrigation and yield (published trial)",
+        "strat_note": (
+            "Published irrigation trial on Khalas date palms at Al Kamil and Al Wafi, "
+            "Oman (2015-2016; Dhehibi et al., 2022). It compares methods at a different "
+            "site, so it is a comparison to explore, not a measurement at Ad Dariz and "
+            "not advice for a particular farm."
+        ),
+        "strat_slider": "Yield loss you would accept to save water (%)",
+        "strat_c1": "Strategy",
+        "strat_c2": "Water (m³/ha per year)",
+        "strat_c3": "Water saved vs bubbler",
+        "strat_c4": "Yield (kg per palm)",
+        "strat_c5": "Yield change",
+        "strat_c6": "Within your limit",
+        "strat_yes": "Yes",
+        "strat_no": "No",
+        "strat_pick": "Candidate strategy to explore",
+        "strat_result": "{name}: {w:,} m³/ha per year, {s:.1f}% less water than bubbler, yield {y:+.1f}% ({kg} kg per palm).",
+        "strat_caveat": "The trial reports no significant yield difference between bubbler and drip at 60% of crop water need, and clear yield reductions at 40% and 20%.",
+        "strat_bubbler": "Bubbler irrigation, 100% of crop water need",
+        "strat_drip60": "Subsurface drip, 60% of crop water need",
+        "strat_drip40": "Subsurface drip, 40% of crop water need",
+        "strat_drip20": "Subsurface drip, 20% of crop water need",
         "rule_t": "How the level was decided (provisional rule)",
         "rule_caveat": (
             "The level comes from a provisional rule that compares today's soil "
@@ -549,6 +613,62 @@ TEXT = {
         "m_temp": "التحكم بالحرارة",
         "m_crop": "احتياج المحصول من المياه",
         "m_pending": "قيد التحديد",
+        "badge_field": "نموذج أولي لتحدي ناسا لتطبيقات الفضاء 2026 (Field Shift)",
+        "chal": "كيف يجيب Red Oasis عن تحدي Field Shift",
+        "chal_intro": (
+            "يطلب التحدي أداة لدعم القرار تجمع بين بيانات ناسا لرصد الأرض ومعلومات "
+            "التربة المحلية وخصائص المحصول وأولويات المزارع، لمساعدة المزارعين على "
+            "استكشاف استراتيجيات توفّر المياه وتتكيف مع الظروف المتغيرة."
+        ),
+        "chal_c1": "ما يطلبه التحدي",
+        "chal_c2": "كيف يجيب Red Oasis",
+        "chal_c3": "الحالة",
+        "chal_r1a": "بيانات ناسا لرصد الأرض",
+        "chal_r1b": "رطوبة التربة SMAP والغطاء النباتي MODIS/VIIRS وأمطار GPM وطقس NASA POWER تغذي نموذجاً يتوقع رطوبة التربة بعد ثلاثة أيام (مستشار الري).",
+        "chal_r1c": "يعمل (تجريبي)",
+        "chal_r2a": "معلومات التربة المحلية",
+        "chal_r2b": "تربة الدريز في الغالب طينية طميية وسعتها الحقلية نحو 22% بالحجم (الغافري، 2006). وحدود الرطوبة الخاصة بالتربة تحتاج معايرة حقلية.",
+        "chal_r2c": "سياق فقط",
+        "chal_r3a": "خصائص المحصول",
+        "chal_r3b": "نخيل التمر: الاحتياج السنوي من الماء والنقص الموسمي من دراسة فلج الدريز المنشورة (أدلة الموقع).",
+        "chal_r3c": "يعمل (بيانات منشورة)",
+        "chal_r4a": "أولويات المزارع",
+        "chal_r4b": "يحدد المزارع مقدار خسارة الإنتاج التي يقبلها مقابل توفير الماء (مستكشف الاستراتيجيات).",
+        "chal_r4c": "يعمل (بيانات منشورة)",
+        "chal_r5a": "استكشاف الاستراتيجيات والتكيف مع الظروف المتغيرة",
+        "chal_r5b": "نصيحة توقيت الري، ومقارنة استراتيجيات الري من تجربة عُمانية، وسيناريو ماء لمفهوم البيئة المغلقة (المريخ).",
+        "chal_r5c": "يعمل، مع مفهوم",
+        "chal_note": (
+            "نخيل التمر شجرة معمّرة، لذا لا تنطبق الدورة الزراعية في هذا الموقع. "
+            "نعالج هدفَي التحدي، توفير الماء والتكيف، من خلال قرارات الري. وتخطيط "
+            "الدورة الزراعية سيكون الخطوة التالية للمحاصيل الموسمية."
+        ),
+        "seas_t": "النمط الموسمي في فلج الدريز (2002-2003)",
+        "seas_note": "نسبة الطلب إلى الإمداد حسب الشهر. أعلى من 1 يعني أن الطلب تجاوز الإمداد (نقص)، وأقل من 1 يعني أن الإمداد تجاوز الطلب.",
+        "seas_short": "نقص من أبريل إلى نوفمبر، ووفرة من ديسمبر إلى فبراير.",
+        "months": ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+        "strat": "مستكشف الاستراتيجيات: الري والإنتاج (تجربة منشورة)",
+        "strat_note": (
+            "تجربة ري منشورة على نخيل الخلاص في محطة الكامل والوافي للأبحاث، عُمان "
+            "(2015-2016؛ Dhehibi وآخرون، 2022). تقارن الطرق في موقع مختلف، فهي مقارنة "
+            "للاستكشاف وليست قياساً في الدريز ولا نصيحة لمزرعة بعينها."
+        ),
+        "strat_slider": "خسارة الإنتاج التي تقبلها مقابل توفير الماء (%)",
+        "strat_c1": "الاستراتيجية",
+        "strat_c2": "الماء (م³/هكتار في السنة)",
+        "strat_c3": "الماء الموفَّر مقابل الفقاعات",
+        "strat_c4": "الإنتاج (كجم للنخلة)",
+        "strat_c5": "تغير الإنتاج",
+        "strat_c6": "ضمن حدّك",
+        "strat_yes": "نعم",
+        "strat_no": "لا",
+        "strat_pick": "استراتيجية مرشحة للاستكشاف",
+        "strat_result": "{name}: {w:,} م³/هكتار في السنة، أقل بنسبة {s:.1f}% من الفقاعات، والإنتاج {y:+.1f}% ({kg} كجم للنخلة).",
+        "strat_caveat": "تذكر التجربة أنه لا فرق معنوي في الإنتاج بين الفقاعات والتنقيط عند 60% من احتياج المحصول، وانخفاضاً واضحاً عند 40% و20%.",
+        "strat_bubbler": "الري بالفقاعات، 100% من احتياج المحصول",
+        "strat_drip60": "التنقيط تحت السطحي، 60% من احتياج المحصول",
+        "strat_drip40": "التنقيط تحت السطحي، 40% من احتياج المحصول",
+        "strat_drip20": "التنقيط تحت السطحي، 20% من احتياج المحصول",
         "rule_t": "كيف تحدد المستوى (قاعدة مؤقتة)",
         "rule_caveat": (
             "يأتي المستوى من قاعدة مؤقتة تقارن رطوبة التربة اليوم والتوقع والمطر "
@@ -705,7 +825,7 @@ st.markdown(
             <h1>Red Oasis</h1>
             <div class="tag">{t['tagline']}</div>
             <div class="sub">{t['subtitle']}</div>
-            <div class="badge">{t['badge']}</div>
+            <div class="badge">{t['badge_field']}</div>
         </div>
     </div>
     """,
@@ -731,6 +851,23 @@ for col, (title, body) in zip(
             f'<div class="ro-point"><h4>{title}</h4><p>{body}</p></div>',
             unsafe_allow_html=True,
         )
+
+# ======================================================================
+# FIELD SHIFT CHALLENGE: HOW RED OASIS ANSWERS IT
+# ======================================================================
+
+st.header(t["chal"])
+st.write(t["chal_intro"])
+st.dataframe(
+    pd.DataFrame(
+        [
+            {t["chal_c1"]: t[f"chal_r{i}a"], t["chal_c2"]: t[f"chal_r{i}b"], t["chal_c3"]: t[f"chal_r{i}c"]}
+            for i in range(1, 6)
+        ]
+    ),
+    hide_index=True,
+)
+st.caption(t["chal_note"])
 
 # ======================================================================
 # TEST SITE
@@ -792,6 +929,23 @@ st.write(
         p=100 * CROP_RESEARCH["shortfall_mm"] / CROP_RESEARCH["annual_demand_mm"],
     )
 )
+st.subheader(t["seas_t"])
+st.caption(t["seas_note"])
+_season = pd.DataFrame(
+    {"month": t["months"], "ratio": CROP_RESEARCH["monthly_demand_supply_ratio"]}
+)
+st.altair_chart(
+    alt.Chart(_season)
+    .mark_bar()
+    .encode(
+        x=alt.X("month:N", sort=t["months"], title=None),
+        y=alt.Y("ratio:Q", title=t["evid_ratio"]),
+        color=alt.condition(alt.datum.ratio > 1, alt.value("#b23a22"), alt.value("#2f7d4f")),
+        tooltip=["month", "ratio"],
+    )
+    .properties(width="container", height=240)
+)
+st.write(t["seas_short"])
 _w1 = CROP_RESEARCH["bubbler_water_m3_ha_year"]
 _w2 = CROP_RESEARCH["subsurface_drip_60pct_etc_water_m3_ha_year"]
 with st.expander(t["evid_trial_t"]):
@@ -804,6 +958,49 @@ with st.expander(t["evid_trial_t"]):
             y2=CROP_RESEARCH["subsurface_drip_60pct_etc_yield_kg_per_palm"],
         )
     )
+
+# ======================================================================
+# STRATEGY EXPLORER (published Oman irrigation trial)
+# ======================================================================
+
+st.header(t["strat"])
+st.caption(t["strat_note"])
+_STRATEGIES = [
+    ("strat_bubbler", CROP_RESEARCH["bubbler_water_m3_ha_year"], CROP_RESEARCH["bubbler_yield_kg_per_palm"]),
+    ("strat_drip60", CROP_RESEARCH["subsurface_drip_60pct_etc_water_m3_ha_year"], CROP_RESEARCH["subsurface_drip_60pct_etc_yield_kg_per_palm"]),
+    ("strat_drip40", CROP_RESEARCH["subsurface_drip_40pct_etc_water_m3_ha_year"], CROP_RESEARCH["subsurface_drip_40pct_etc_yield_kg_per_palm"]),
+    ("strat_drip20", CROP_RESEARCH["subsurface_drip_20pct_etc_water_m3_ha_year"], CROP_RESEARCH["subsurface_drip_20pct_etc_yield_kg_per_palm"]),
+]
+_base_water, _base_yield = _STRATEGIES[0][1], _STRATEGIES[0][2]
+accepted_loss = st.slider(t["strat_slider"], 0.0, 15.0, 2.0, step=0.5)
+_rows, _best = [], _STRATEGIES[0]
+for key, water, kg in _STRATEGIES:
+    change = 100 * (kg / _base_yield - 1)
+    ok = max(0.0, -change) <= accepted_loss
+    if ok and water < _best[1]:
+        _best = (key, water, kg)
+    _rows.append(
+        {
+            t["strat_c1"]: t[key],
+            t["strat_c2"]: f"{water:,}",
+            t["strat_c3"]: f"{100 * (1 - water / _base_water):.1f}%",
+            t["strat_c4"]: f"{kg}",
+            t["strat_c5"]: f"{change:+.1f}%",
+            t["strat_c6"]: t["strat_yes"] if ok else t["strat_no"],
+        }
+    )
+st.dataframe(pd.DataFrame(_rows), hide_index=True)
+st.markdown(f"**{t['strat_pick']}**")
+st.success(
+    t["strat_result"].format(
+        name=t[_best[0]],
+        w=_best[1],
+        s=100 * (1 - _best[1] / _base_water),
+        y=100 * (_best[2] / _base_yield - 1),
+        kg=_best[2],
+    )
+)
+st.caption(t["strat_caveat"])
 
 # ======================================================================
 # DATA SOURCES
@@ -950,13 +1147,6 @@ else:
 
 # ======================================================================
 # OPERATING ENVIRONMENTS
-# ======================================================================
-# PROJECT LIMITS
-# ======================================================================
-
-st.header(t["limits"])
-for _key in ("lim1", "lim2", "lim3", "lim4", "lim5", "lim6", "lim7"):
-    st.markdown(f"- {t[_key]}")
 
 # ======================================================================
 
@@ -1000,6 +1190,14 @@ with tab_mars:
     else:
         st.success(t["mars_ok"])
     st.caption(t["mars_assump"])
+
+# ======================================================================
+# PROJECT LIMITS
+# ======================================================================
+
+st.header(t["limits"])
+for _key in ("lim1", "lim2", "lim3", "lim4", "lim5", "lim6", "lim7"):
+    st.markdown(f"- {t[_key]}")
 
 # ======================================================================
 # FOOTER
