@@ -86,8 +86,11 @@ The rule does not replace or change `THRESHOLDS`; that belongs to the website.
 - **SMAP is regional.** It is about a 9 km signal and doesn't see falaj water
   inside the orchard. High "observed soil moisture" means wet regional surface
   soil, not a wet root zone.
-- **Thresholds are relative to the satellite record.** Crop-based
-  soil-moisture limits for date palm (Shareefa's Week 3 research) should
-  replace the site medians when they are available.
+- **Thresholds are relative to the satellite record, not to the crop.**
+  Crop-based soil-moisture limits for date palm are not available:
+  Shareefa's dossier (section 3) concludes that no defensible volumetric
+  threshold exists without measuring the plot's field capacity and wilting
+  point. The rule therefore stays relative to this site's own record, and
+  its medians must not be read as crop water requirements.
 - **The model itself is experimental.** It doesn't reliably beat persistence
   in cross-validation (see `model/README.md`).
