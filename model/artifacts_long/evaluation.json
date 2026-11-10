@@ -1,0 +1,359 @@
+{
+  "task": "regression (forecast)",
+  "target": "observed soil_moisture_pct in 3 days",
+  "target_unit": "% volumetric",
+  "features": [
+    "soil_moisture_pct",
+    "ndvi",
+    "rainfall_7d_mm",
+    "temperature_c",
+    "et0_mm"
+  ],
+  "validation": "Chronological hold-out (no shuffling): train on feature dates up to 2024-08-04, test on feature dates from 2024-08-08. A 3-day gap prevents training targets from overlapping the test period.",
+  "train_period": [
+    "2015-04-02",
+    "2024-08-04"
+  ],
+  "test_period": [
+    "2024-08-08",
+    "2026-10-17"
+  ],
+  "n_train": 1951,
+  "n_test": 489,
+  "metric_units": "MAE and RMSE in % volumetric; R2 unitless",
+  "cv_training_period": {
+    "method": "TimeSeriesSplit(n_splits=5), training rows only; calendar gap of 3 days between fold train and validation",
+    "mean_over_folds": {
+      "random_forest": {
+        "mae": 1.0099200724107622,
+        "rmse": 1.8628896148341696,
+        "r2": -0.045819008511049676
+      },
+      "ridge": {
+        "mae": 0.9270411198648592,
+        "rmse": 1.788089648776845,
+        "r2": 0.04714018258773707
+      },
+      "linear_soil_only": {
+        "mae": 0.9300421864217995,
+        "rmse": 1.7907684686223475,
+        "r2": 0.04142699251893389
+      },
+      "baseline_persistence": {
+        "mae": 1.1553846153846152,
+        "rmse": 2.2726818549174093,
+        "r2": -0.5657408968057228
+      },
+      "baseline_training_mean": {
+        "mae": 0.9731967508412444,
+        "rmse": 1.8474444347145713,
+        "r2": -0.014784063915940272
+      }
+    },
+    "folds_beating_persistence": {
+      "random_forest": 5,
+      "ridge": 5,
+      "linear_soil_only": 5,
+      "baseline_training_mean": 5
+    },
+    "folds": [
+      {
+        "fold": 1,
+        "validation_period": [
+          "2016-10-30",
+          "2018-04-24"
+        ],
+        "n_train": 323,
+        "n_validation": 325,
+        "metrics": {
+          "random_forest": {
+            "mae": 0.9516837036718461,
+            "rmse": 1.7762386314921612,
+            "r2": -0.15903961458206117
+          },
+          "ridge": {
+            "mae": 0.9225115985542979,
+            "rmse": 1.652705891869009,
+            "r2": -0.0034293686793851474
+          },
+          "linear_soil_only": {
+            "mae": 0.9770803334364747,
+            "rmse": 1.6771606667021883,
+            "r2": -0.033344172255040716
+          },
+          "baseline_persistence": {
+            "mae": 1.0347384615384614,
+            "rmse": 2.1828573370346844,
+            "r2": -0.7504365093962442
+          },
+          "baseline_training_mean": {
+            "mae": 1.0296061919504644,
+            "rmse": 1.6930245407701794,
+            "r2": -0.052984949898372324
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "validation_period": [
+          "2018-04-26",
+          "2019-11-28"
+        ],
+        "n_train": 648,
+        "n_validation": 325,
+        "metrics": {
+          "random_forest": {
+            "mae": 1.0450233556256154,
+            "rmse": 1.6768265751694607,
+            "r2": -0.17976130083877684
+          },
+          "ridge": {
+            "mae": 0.8564450786394676,
+            "rmse": 1.5152033454779803,
+            "r2": 0.036704146928254744
+          },
+          "linear_soil_only": {
+            "mae": 0.8049940680993756,
+            "rmse": 1.5371996398777823,
+            "r2": 0.008532694207613933
+          },
+          "baseline_persistence": {
+            "mae": 1.0915692307692308,
+            "rmse": 2.113140280756071,
+            "r2": -0.8735897717172714
+          },
+          "baseline_training_mean": {
+            "mae": 0.8118085470085472,
+            "rmse": 1.547245802817985,
+            "r2": -0.004468856682942057
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "validation_period": [
+          "2019-11-29",
+          "2021-06-22"
+        ],
+        "n_train": 973,
+        "n_validation": 325,
+        "metrics": {
+          "random_forest": {
+            "mae": 0.8831129411651699,
+            "rmse": 1.8299438408214954,
+            "r2": 0.08292782639680485
+          },
+          "ridge": {
+            "mae": 0.8584003715568275,
+            "rmse": 1.813479531448187,
+            "r2": 0.0993556923457738
+          },
+          "linear_soil_only": {
+            "mae": 0.8782038452160134,
+            "rmse": 1.8091847485302044,
+            "r2": 0.10361655267477599
+          },
+          "baseline_persistence": {
+            "mae": 1.1046461538461538,
+            "rmse": 2.1511016855412626,
+            "r2": -0.2672137406627044
+          },
+          "baseline_training_mean": {
+            "mae": 0.9464081903707805,
+            "rmse": 1.9213851757065923,
+            "r2": -0.011013287611244316
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "validation_period": [
+          "2021-06-24",
+          "2023-02-23"
+        ],
+        "n_train": 1298,
+        "n_validation": 325,
+        "metrics": {
+          "random_forest": {
+            "mae": 1.0058382654568099,
+            "rmse": 1.8524896305092609,
+            "r2": -0.035080301866554864
+          },
+          "ridge": {
+            "mae": 0.9573200888628898,
+            "rmse": 1.7938253681405048,
+            "r2": 0.029439090807362067
+          },
+          "linear_soil_only": {
+            "mae": 0.9536207372937084,
+            "rmse": 1.790386748247528,
+            "r2": 0.033156499819286256
+          },
+          "baseline_persistence": {
+            "mae": 1.2567384615384614,
+            "rmse": 2.2684355842738846,
+            "r2": -0.5520845475715608
+          },
+          "baseline_training_mean": {
+            "mae": 0.969529856584094,
+            "rmse": 1.825190426463718,
+            "r2": -0.004798173099344272
+          }
+        }
+      },
+      {
+        "fold": 5,
+        "validation_period": [
+          "2023-02-25",
+          "2024-08-04"
+        ],
+        "n_train": 1623,
+        "n_validation": 325,
+        "metrics": {
+          "random_forest": {
+            "mae": 1.1639420961343694,
+            "rmse": 2.178949396178469,
+            "r2": 0.06185834833533965
+          },
+          "ridge": {
+            "mae": 1.0405284617108128,
+            "rmse": 2.165234106948544,
+            "r2": 0.07363135153667988
+          },
+          "linear_soil_only": {
+            "mae": 1.036311948063426,
+            "rmse": 2.139910539754036,
+            "r2": 0.095173388148034
+          },
+          "baseline_persistence": {
+            "mae": 1.2892307692307692,
+            "rmse": 2.6478743869811443,
+            "r2": -0.3853799146808332
+          },
+          "baseline_training_mean": {
+            "mae": 1.1086309682923359,
+            "rmse": 2.250376227814383,
+            "r2": -0.0006550522877983855
+          }
+        }
+      }
+    ],
+    "by_condition_mae": {
+      "rain_in_last_7_days": {
+        "n": 720,
+        "random_forest": 1.4005504915206672,
+        "ridge": 1.2029569797646815,
+        "linear_soil_only": 1.1890487075594725,
+        "baseline_persistence": 1.6946388888888888,
+        "baseline_training_mean": 1.2312055188422686
+      },
+      "no_rain_in_last_7_days": {
+        "n": 905,
+        "random_forest": 0.6991422804117218,
+        "ridge": 0.7075279495578182,
+        "linear_soil_only": 0.7239817497155847,
+        "baseline_persistence": 0.7263646408839779,
+        "baseline_training_mean": 0.7679301066857335
+      }
+    }
+  },
+  "n_test_compared": 489,
+  "test_metrics": {
+    "random_forest": {
+      "mae": 1.0862477310161072,
+      "rmse": 1.7812741364429148,
+      "r2": 0.12084153510864937
+    },
+    "ridge": {
+      "mae": 1.0655584184928535,
+      "rmse": 1.7447607450599116,
+      "r2": 0.15651492778383436
+    },
+    "linear_soil_only": {
+      "mae": 1.0586439389107294,
+      "rmse": 1.7690626113432328,
+      "r2": 0.13285435848876115
+    },
+    "baseline_persistence": {
+      "mae": 1.0426993865030674,
+      "rmse": 1.9454630772304764,
+      "r2": -0.04870085801472723
+    },
+    "baseline_training_mean": {
+      "mae": 1.2038115947041996,
+      "rmse": 1.9442509188578405,
+      "r2": -0.047394438458292054
+    }
+  },
+  "test_by_condition_mae": {
+    "rain_in_last_7_days": {
+      "n": 219,
+      "random_forest": 1.5077616953174093,
+      "ridge": 1.282801227681067,
+      "linear_soil_only": 1.261422607819862,
+      "baseline_persistence": 1.5241095890410958,
+      "baseline_training_mean": 1.364368208318413
+    },
+    "no_rain_in_last_7_days": {
+      "n": 270,
+      "random_forest": 0.744353071082829,
+      "ridge": 0.8893503621513021,
+      "linear_soil_only": 0.8941679074622103,
+      "baseline_persistence": 0.6522222222222221,
+      "baseline_training_mean": 1.0735823414393375
+    }
+  },
+  "test_metrics_random_forest_without_et0": {
+    "mae": 1.0246711026256115,
+    "rmse": 1.7820287279747167,
+    "r2": 0.12009651104234398
+  },
+  "skill_vs_persistence": -0.04176500444590192,
+  "model_beats_persistence_on_test": false,
+  "model_beats_persistence_in_cv": true,
+  "reliable": false,
+  "reliability_rule": "mean CV MAE < persistence, wins in a majority of CV folds, and lower MAE than persistence on the final test period",
+  "model_status_label": "experimental",
+  "model_selection": "The saved model is the Random Forest (kept for exact SHAP explanations). Ridge and a soil-moisture-only linear model are reported for comparison only; no model was chosen or tuned on the final test period.",
+  "status": "ok",
+  "data_source": "NASA-derived daily CSV: red_oasis_daily_2015_2026.csv",
+  "data_location": {
+    "sites": [
+      "Farm_23.3086_56.6131"
+    ],
+    "lat": [
+      23.308639
+    ],
+    "lon": [
+      56.613083
+    ]
+  },
+  "agreed_site": {
+    "name": "Dariz palm oasis, Ibri",
+    "lat": 23.308639,
+    "lon": 56.613083
+  },
+  "is_synthetic": false,
+  "row_selection": {
+    "rows_total": 4314,
+    "rows_used": 2441,
+    "rows_excluded": {
+      "rain_suspect = 1 on the feature date": 5,
+      "suspect rain inside the 7-day rainfall window": 24,
+      "rain_suspect = 1 on the target date": 4,
+      "incomplete 7-day rainfall record (a day is missing)": 13,
+      "no observed soil moisture on the feature date": 1263,
+      "no observed target value on the target date": 564
+    }
+  },
+  "feature_missing_share": {
+    "soil_moisture_pct": 0.0,
+    "ndvi": 0.0,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 0.0,
+    "et0_mm": 0.0
+  },
+  "unavailable_features": [],
+  "validation_warnings": [],
+  "created_at": "2026-11-03T14:58:45+00:00"
+}
