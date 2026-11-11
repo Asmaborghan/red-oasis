@@ -1,0 +1,5025 @@
+{
+ "description": "Final test period replay. Forecasts from the evaluation-period model (trained only on days before the test period); rule medians from the same training rows.",
+ "train_period": [
+  "2024-01-08",
+  "2026-03-13"
+ ],
+ "test_period": [
+  "2026-03-18",
+  "2026-09-27"
+ ],
+ "horizon_days": 3,
+ "rule_reference": {
+  "soil_median_pct": 8.790000000000001,
+  "et0_median_mm": 5.355
+ },
+ "rule_version": "1.0 (provisional, 25 Oct 2026)",
+ "summary": {
+  "random_forest": 1.203552418204525,
+  "baseline_persistence": 1.3068852459016396
+ },
+ "days": [
+  {
+   "date": "2026-03-18",
+   "target_date": "2026-03-21",
+   "inputs": {
+    "soil_moisture_pct": 7.51,
+    "ndvi": 0.2186,
+    "rainfall_7d_mm": 0.09,
+    "temperature_c": 28.07,
+    "et0_mm": 6.6
+   },
+   "forecast_pct": 9.3082,
+   "observed_pct": 7.87,
+   "persistence_pct": 7.51,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.51,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3082,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.09,
+     "reference": 19.8
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.6,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-19",
+   "target_date": "2026-03-22",
+   "inputs": {
+    "soil_moisture_pct": 8.24,
+    "ndvi": 0.2186,
+    "rainfall_7d_mm": 0.09,
+    "temperature_c": 27.11,
+    "et0_mm": 5.71
+   },
+   "forecast_pct": 9.0205,
+   "observed_pct": 10.2,
+   "persistence_pct": 8.24,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.24,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0205,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.09,
+     "reference": 17.13
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.71,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-21",
+   "target_date": "2026-03-24",
+   "inputs": {
+    "soil_moisture_pct": 7.87,
+    "ndvi": 0.2186,
+    "rainfall_7d_mm": 6.46,
+    "temperature_c": 22.93,
+    "et0_mm": 3.41
+   },
+   "forecast_pct": 10.2588,
+   "observed_pct": 21.11,
+   "persistence_pct": 7.87,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.87,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.2588,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 6.46,
+     "reference": 10.23
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 3.41,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-23",
+   "target_date": "2026-03-26",
+   "inputs": {
+    "soil_moisture_pct": 10.72,
+    "ndvi": 0.3014,
+    "rainfall_7d_mm": 44.77,
+    "temperature_c": 21.04,
+    "et0_mm": 1.73
+   },
+   "forecast_pct": 9.9519,
+   "observed_pct": 25.18,
+   "persistence_pct": 10.72,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 10.72,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9519,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 44.77,
+     "reference": 5.19
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 1.73,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-24",
+   "target_date": "2026-03-27",
+   "inputs": {
+    "soil_moisture_pct": 21.11,
+    "ndvi": 0.3014,
+    "rainfall_7d_mm": 49.02,
+    "temperature_c": 21.09,
+    "et0_mm": 2.74
+   },
+   "forecast_pct": 15.0034,
+   "observed_pct": 24.71,
+   "persistence_pct": 21.11,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 21.11,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 15.0034,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 49.02,
+     "reference": 8.22
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 2.74,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-26",
+   "target_date": "2026-03-29",
+   "inputs": {
+    "soil_moisture_pct": 25.18,
+    "ndvi": 0.3014,
+    "rainfall_7d_mm": 88.53,
+    "temperature_c": 24.52,
+    "et0_mm": 4.29
+   },
+   "forecast_pct": 14.868,
+   "observed_pct": 21.58,
+   "persistence_pct": 25.18,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 25.18,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 14.868,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 88.53,
+     "reference": 12.87
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.29,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-27",
+   "target_date": "2026-03-30",
+   "inputs": {
+    "soil_moisture_pct": 24.71,
+    "ndvi": 0.3014,
+    "rainfall_7d_mm": 166.56,
+    "temperature_c": 23.21,
+    "et0_mm": 3.43
+   },
+   "forecast_pct": 14.8788,
+   "observed_pct": 12.66,
+   "persistence_pct": 24.71,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 24.71,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 14.8788,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 166.56,
+     "reference": 10.29
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 3.43,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-29",
+   "target_date": "2026-04-01",
+   "inputs": {
+    "soil_moisture_pct": 21.58,
+    "ndvi": 0.3014,
+    "rainfall_7d_mm": 161.75,
+    "temperature_c": 16.73,
+    "et0_mm": 4.82
+   },
+   "forecast_pct": 14.9592,
+   "observed_pct": 14.01,
+   "persistence_pct": 21.58,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 21.58,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 14.9592,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 161.75,
+     "reference": 14.46
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.82,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-03-31",
+   "target_date": "2026-04-03",
+   "inputs": {
+    "soil_moisture_pct": 15.11,
+    "ndvi": 0.2093,
+    "rainfall_7d_mm": 123.41,
+    "temperature_c": 22.12,
+    "et0_mm": 3.97
+   },
+   "forecast_pct": 10.3866,
+   "observed_pct": 13.38,
+   "persistence_pct": 15.11,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 15.11,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.3866,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 123.41,
+     "reference": 11.91
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 3.97,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-01",
+   "target_date": "2026-04-04",
+   "inputs": {
+    "soil_moisture_pct": 14.01,
+    "ndvi": 0.2093,
+    "rainfall_7d_mm": 99.1,
+    "temperature_c": 21.14,
+    "et0_mm": 4.4
+   },
+   "forecast_pct": 10.5657,
+   "observed_pct": 9.37,
+   "persistence_pct": 14.01,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 14.01,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.5657,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 99.1,
+     "reference": 13.2
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.4,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-03",
+   "target_date": "2026-04-06",
+   "inputs": {
+    "soil_moisture_pct": 13.38,
+    "ndvi": 0.2093,
+    "rainfall_7d_mm": 14.6,
+    "temperature_c": 20.26,
+    "et0_mm": 4.77
+   },
+   "forecast_pct": 10.5325,
+   "observed_pct": 9.03,
+   "persistence_pct": 13.38,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 13.38,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.5325,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 14.6,
+     "reference": 14.31
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.77,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-04",
+   "target_date": "2026-04-07",
+   "inputs": {
+    "soil_moisture_pct": 9.37,
+    "ndvi": 0.2093,
+    "rainfall_7d_mm": 14.6,
+    "temperature_c": 22.76,
+    "et0_mm": 4.51
+   },
+   "forecast_pct": 9.9021,
+   "observed_pct": 8.72,
+   "persistence_pct": 9.37,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.37,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9021,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": false,
+     "value": 14.6,
+     "reference": 13.53
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.51,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-06",
+   "target_date": "2026-04-09",
+   "inputs": {
+    "soil_moisture_pct": 9.03,
+    "ndvi": 0.2093,
+    "rainfall_7d_mm": 14.6,
+    "temperature_c": 23.77,
+    "et0_mm": 5.47
+   },
+   "forecast_pct": 9.6883,
+   "observed_pct": 7.39,
+   "persistence_pct": 9.03,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.03,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.6883,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 14.6,
+     "reference": 16.41
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.47,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-08",
+   "target_date": "2026-04-11",
+   "inputs": {
+    "soil_moisture_pct": 9.36,
+    "ndvi": 0.4538,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 20.54,
+    "et0_mm": 5.64
+   },
+   "forecast_pct": 9.2905,
+   "observed_pct": 9.19,
+   "persistence_pct": 9.36,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.36,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.2905,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 16.92
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.64,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-09",
+   "target_date": "2026-04-12",
+   "inputs": {
+    "soil_moisture_pct": 7.39,
+    "ndvi": 0.4538,
+    "rainfall_7d_mm": 6.68,
+    "temperature_c": 23.35,
+    "et0_mm": 4.06
+   },
+   "forecast_pct": 9.3438,
+   "observed_pct": 9.18,
+   "persistence_pct": 7.39,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.39,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3438,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 6.68,
+     "reference": 12.18
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.06,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-11",
+   "target_date": "2026-04-14",
+   "inputs": {
+    "soil_moisture_pct": 9.19,
+    "ndvi": 0.4538,
+    "rainfall_7d_mm": 8.98,
+    "temperature_c": 24.43,
+    "et0_mm": 3.92
+   },
+   "forecast_pct": 8.9152,
+   "observed_pct": 9.51,
+   "persistence_pct": 9.19,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.19,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.9152,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 8.98,
+     "reference": 11.76
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 3.92,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-12",
+   "target_date": "2026-04-15",
+   "inputs": {
+    "soil_moisture_pct": 9.18,
+    "ndvi": 0.4538,
+    "rainfall_7d_mm": 9.1,
+    "temperature_c": 26.03,
+    "et0_mm": 4.7
+   },
+   "forecast_pct": 8.8672,
+   "observed_pct": 8.42,
+   "persistence_pct": 9.18,
+   "level": "none",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.18,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.8672,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 9.1,
+     "reference": 14.1
+    },
+    {
+     "name": "high_demand",
+     "met": false,
+     "value": 4.7,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-14",
+   "target_date": "2026-04-17",
+   "inputs": {
+    "soil_moisture_pct": 9.51,
+    "ndvi": 0.4538,
+    "rainfall_7d_mm": 9.1,
+    "temperature_c": 25.46,
+    "et0_mm": 6.78
+   },
+   "forecast_pct": 9.1833,
+   "observed_pct": 7.96,
+   "persistence_pct": 9.51,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.51,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1833,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 9.1,
+     "reference": 20.34
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.78,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-16",
+   "target_date": "2026-04-19",
+   "inputs": {
+    "soil_moisture_pct": 8.95,
+    "ndvi": 0.4712,
+    "rainfall_7d_mm": 2.43,
+    "temperature_c": 22.48,
+    "et0_mm": 7.09
+   },
+   "forecast_pct": 9.0619,
+   "observed_pct": 8.32,
+   "persistence_pct": 8.95,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.95,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0619,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.43,
+     "reference": 21.27
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.09,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-17",
+   "target_date": "2026-04-20",
+   "inputs": {
+    "soil_moisture_pct": 7.96,
+    "ndvi": 0.4712,
+    "rainfall_7d_mm": 0.29,
+    "temperature_c": 23.19,
+    "et0_mm": 6.88
+   },
+   "forecast_pct": 9.0255,
+   "observed_pct": 8.49,
+   "persistence_pct": 7.96,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.96,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0255,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.29,
+     "reference": 20.64
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.88,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-19",
+   "target_date": "2026-04-22",
+   "inputs": {
+    "soil_moisture_pct": 8.32,
+    "ndvi": 0.4712,
+    "rainfall_7d_mm": 0.01,
+    "temperature_c": 25.47,
+    "et0_mm": 6.52
+   },
+   "forecast_pct": 8.5288,
+   "observed_pct": 8.86,
+   "persistence_pct": 8.32,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.32,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.5288,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.01,
+     "reference": 19.56
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.52,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-20",
+   "target_date": "2026-04-23",
+   "inputs": {
+    "soil_moisture_pct": 8.49,
+    "ndvi": 0.4712,
+    "rainfall_7d_mm": 0.01,
+    "temperature_c": 27.85,
+    "et0_mm": 5.64
+   },
+   "forecast_pct": 8.8323,
+   "observed_pct": 7.91,
+   "persistence_pct": 8.49,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.49,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.8323,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.01,
+     "reference": 16.92
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.64,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-22",
+   "target_date": "2026-04-25",
+   "inputs": {
+    "soil_moisture_pct": 8.86,
+    "ndvi": 0.4712,
+    "rainfall_7d_mm": 0.01,
+    "temperature_c": 29.66,
+    "et0_mm": 6.6
+   },
+   "forecast_pct": 8.7248,
+   "observed_pct": 8.04,
+   "persistence_pct": 8.86,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.86,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.7248,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.01,
+     "reference": 19.8
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.6,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-24",
+   "target_date": "2026-04-27",
+   "inputs": {
+    "soil_moisture_pct": 9.05,
+    "ndvi": 0.474,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 30.13,
+    "et0_mm": 6.13
+   },
+   "forecast_pct": 8.6896,
+   "observed_pct": 7.94,
+   "persistence_pct": 9.05,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.05,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6896,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 18.39
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.13,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-25",
+   "target_date": "2026-04-28",
+   "inputs": {
+    "soil_moisture_pct": 8.04,
+    "ndvi": 0.474,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 30.67,
+    "et0_mm": 5.91
+   },
+   "forecast_pct": 8.6351,
+   "observed_pct": 7.87,
+   "persistence_pct": 8.04,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.04,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6351,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 17.73
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.91,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-27",
+   "target_date": "2026-04-30",
+   "inputs": {
+    "soil_moisture_pct": 7.94,
+    "ndvi": 0.474,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 29.66,
+    "et0_mm": 7.83
+   },
+   "forecast_pct": 9.0103,
+   "observed_pct": 9.74,
+   "persistence_pct": 7.94,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.94,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0103,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.49
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.83,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-28",
+   "target_date": "2026-05-01",
+   "inputs": {
+    "soil_moisture_pct": 7.87,
+    "ndvi": 0.474,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 29.78,
+    "et0_mm": 7.68
+   },
+   "forecast_pct": 9.0006,
+   "observed_pct": 7.89,
+   "persistence_pct": 7.87,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.87,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0006,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.04
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.68,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-04-30",
+   "target_date": "2026-05-03",
+   "inputs": {
+    "soil_moisture_pct": 9.74,
+    "ndvi": 0.474,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 32.11,
+    "et0_mm": 6.52
+   },
+   "forecast_pct": 8.8622,
+   "observed_pct": 8.37,
+   "persistence_pct": 9.74,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.74,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.8622,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 19.56
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.52,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-02",
+   "target_date": "2026-05-05",
+   "inputs": {
+    "soil_moisture_pct": 8.13,
+    "ndvi": 0.4443,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.15,
+    "et0_mm": 8.74
+   },
+   "forecast_pct": 8.6466,
+   "observed_pct": 7.93,
+   "persistence_pct": 8.13,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.13,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6466,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.22
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.74,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-03",
+   "target_date": "2026-05-06",
+   "inputs": {
+    "soil_moisture_pct": 8.37,
+    "ndvi": 0.4443,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.18,
+    "et0_mm": 9.72
+   },
+   "forecast_pct": 8.6438,
+   "observed_pct": 8.04,
+   "persistence_pct": 8.37,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.37,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6438,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 29.16
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.72,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-05",
+   "target_date": "2026-05-08",
+   "inputs": {
+    "soil_moisture_pct": 7.93,
+    "ndvi": 0.4443,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 30.91,
+    "et0_mm": 8.22
+   },
+   "forecast_pct": 8.952,
+   "observed_pct": 8.52,
+   "persistence_pct": 7.93,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.93,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.952,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.66
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.22,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-06",
+   "target_date": "2026-05-09",
+   "inputs": {
+    "soil_moisture_pct": 8.04,
+    "ndvi": 0.4443,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.41,
+    "et0_mm": 8.08
+   },
+   "forecast_pct": 8.7014,
+   "observed_pct": 8.7,
+   "persistence_pct": 8.04,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.04,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.7014,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.24
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.08,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-08",
+   "target_date": "2026-05-11",
+   "inputs": {
+    "soil_moisture_pct": 8.52,
+    "ndvi": 0.4443,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 32.04,
+    "et0_mm": 8.9
+   },
+   "forecast_pct": 8.5949,
+   "observed_pct": 8.18,
+   "persistence_pct": 8.52,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.52,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.5949,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.7
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.9,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-10",
+   "target_date": "2026-05-13",
+   "inputs": {
+    "soil_moisture_pct": 8.72,
+    "ndvi": 0.4452,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.52,
+    "et0_mm": 8.48
+   },
+   "forecast_pct": 8.6296,
+   "observed_pct": 7.47,
+   "persistence_pct": 8.72,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.72,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6296,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 25.44
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.48,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-11",
+   "target_date": "2026-05-14",
+   "inputs": {
+    "soil_moisture_pct": 8.18,
+    "ndvi": 0.4452,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 32.5,
+    "et0_mm": 7.97
+   },
+   "forecast_pct": 8.6932,
+   "observed_pct": 8.14,
+   "persistence_pct": 8.18,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.18,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6932,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.91
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.97,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-13",
+   "target_date": "2026-05-16",
+   "inputs": {
+    "soil_moisture_pct": 7.47,
+    "ndvi": 0.4452,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 32.0,
+    "et0_mm": 8.94
+   },
+   "forecast_pct": 9.0957,
+   "observed_pct": 8.87,
+   "persistence_pct": 7.47,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.47,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0957,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.82
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.94,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-14",
+   "target_date": "2026-05-17",
+   "inputs": {
+    "soil_moisture_pct": 8.14,
+    "ndvi": 0.4452,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.89,
+    "et0_mm": 10.68
+   },
+   "forecast_pct": 8.8061,
+   "observed_pct": 9.01,
+   "persistence_pct": 8.14,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.14,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.8061,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 32.04
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 10.68,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-16",
+   "target_date": "2026-05-19",
+   "inputs": {
+    "soil_moisture_pct": 8.87,
+    "ndvi": 0.4452,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.38,
+    "et0_mm": 8.2
+   },
+   "forecast_pct": 8.6168,
+   "observed_pct": 7.85,
+   "persistence_pct": 8.87,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.87,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.6168,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.6
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.2,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-18",
+   "target_date": "2026-05-21",
+   "inputs": {
+    "soil_moisture_pct": 9.33,
+    "ndvi": 0.384,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.52,
+    "et0_mm": 9.24
+   },
+   "forecast_pct": 8.7465,
+   "observed_pct": 7.87,
+   "persistence_pct": 9.33,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.33,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": true,
+     "value": 8.7465,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 27.72
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.24,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-19",
+   "target_date": "2026-05-22",
+   "inputs": {
+    "soil_moisture_pct": 7.85,
+    "ndvi": 0.384,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 30.17,
+    "et0_mm": 8.89
+   },
+   "forecast_pct": 8.94,
+   "observed_pct": 8.01,
+   "persistence_pct": 7.85,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.85,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.94,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.67
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.89,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-21",
+   "target_date": "2026-05-24",
+   "inputs": {
+    "soil_moisture_pct": 7.87,
+    "ndvi": 0.384,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 31.98,
+    "et0_mm": 11.72
+   },
+   "forecast_pct": 9.1526,
+   "observed_pct": 8.73,
+   "persistence_pct": 7.87,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.87,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1526,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 35.16
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 11.72,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-22",
+   "target_date": "2026-05-25",
+   "inputs": {
+    "soil_moisture_pct": 8.01,
+    "ndvi": 0.384,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 34.11,
+    "et0_mm": 9.57
+   },
+   "forecast_pct": 9.0985,
+   "observed_pct": 7.81,
+   "persistence_pct": 8.01,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.01,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0985,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 28.71
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.57,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-24",
+   "target_date": "2026-05-27",
+   "inputs": {
+    "soil_moisture_pct": 8.73,
+    "ndvi": 0.384,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 34.43,
+    "et0_mm": 7.74
+   },
+   "forecast_pct": 9.0923,
+   "observed_pct": 8.47,
+   "persistence_pct": 8.73,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.73,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0923,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.22
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.74,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-26",
+   "target_date": "2026-05-29",
+   "inputs": {
+    "soil_moisture_pct": 8.96,
+    "ndvi": 0.4296,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 35.76,
+    "et0_mm": 9.49
+   },
+   "forecast_pct": 9.1296,
+   "observed_pct": 7.6,
+   "persistence_pct": 8.96,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.96,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1296,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 28.47
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.49,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-27",
+   "target_date": "2026-05-30",
+   "inputs": {
+    "soil_moisture_pct": 8.47,
+    "ndvi": 0.4296,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.83,
+    "et0_mm": 8.63
+   },
+   "forecast_pct": 9.1907,
+   "observed_pct": 8.33,
+   "persistence_pct": 8.47,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.47,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1907,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 25.89
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.63,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-29",
+   "target_date": "2026-06-01",
+   "inputs": {
+    "soil_moisture_pct": 7.6,
+    "ndvi": 0.4296,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.43,
+    "et0_mm": 7.99
+   },
+   "forecast_pct": 9.352,
+   "observed_pct": 8.81,
+   "persistence_pct": 7.6,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.6,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.352,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.97
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.99,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-05-30",
+   "target_date": "2026-06-02",
+   "inputs": {
+    "soil_moisture_pct": 8.33,
+    "ndvi": 0.4296,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.3,
+    "et0_mm": 10.48
+   },
+   "forecast_pct": 9.0244,
+   "observed_pct": 9.78,
+   "persistence_pct": 8.33,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.33,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0244,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 31.44
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 10.48,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-01",
+   "target_date": "2026-06-04",
+   "inputs": {
+    "soil_moisture_pct": 8.81,
+    "ndvi": 0.4296,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.37,
+    "et0_mm": 9.95
+   },
+   "forecast_pct": 8.9471,
+   "observed_pct": 8.86,
+   "persistence_pct": 8.81,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.81,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.9471,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 29.85
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.95,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-03",
+   "target_date": "2026-06-06",
+   "inputs": {
+    "soil_moisture_pct": 9.76,
+    "ndvi": 0.3838,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.45,
+    "et0_mm": 10.69
+   },
+   "forecast_pct": 9.1191,
+   "observed_pct": 8.51,
+   "persistence_pct": 9.76,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.76,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1191,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 32.07
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 10.69,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-04",
+   "target_date": "2026-06-07",
+   "inputs": {
+    "soil_moisture_pct": 8.86,
+    "ndvi": 0.3838,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.42,
+    "et0_mm": 8.23
+   },
+   "forecast_pct": 9.0191,
+   "observed_pct": 9.63,
+   "persistence_pct": 8.86,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.86,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0191,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.69
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.23,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-06",
+   "target_date": "2026-06-09",
+   "inputs": {
+    "soil_moisture_pct": 8.51,
+    "ndvi": 0.3838,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.73,
+    "et0_mm": 8.09
+   },
+   "forecast_pct": 9.3963,
+   "observed_pct": 8.66,
+   "persistence_pct": 8.51,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.51,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3963,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.27
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.09,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-07",
+   "target_date": "2026-06-10",
+   "inputs": {
+    "soil_moisture_pct": 9.63,
+    "ndvi": 0.3838,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.67,
+    "et0_mm": 7.47
+   },
+   "forecast_pct": 9.1639,
+   "observed_pct": 8.49,
+   "persistence_pct": 9.63,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.63,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1639,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 22.41
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.47,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-09",
+   "target_date": "2026-06-12",
+   "inputs": {
+    "soil_moisture_pct": 8.66,
+    "ndvi": 0.3838,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.52,
+    "et0_mm": 11.41
+   },
+   "forecast_pct": 9.3353,
+   "observed_pct": 8.76,
+   "persistence_pct": 8.66,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.66,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3353,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 34.23
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 11.41,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-11",
+   "target_date": "2026-06-14",
+   "inputs": {
+    "soil_moisture_pct": 9.1,
+    "ndvi": 0.4544,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.29,
+    "et0_mm": 8.78
+   },
+   "forecast_pct": 8.8278,
+   "observed_pct": 8.53,
+   "persistence_pct": 9.1,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.1,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.8278,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.34
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.78,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-12",
+   "target_date": "2026-06-15",
+   "inputs": {
+    "soil_moisture_pct": 8.76,
+    "ndvi": 0.4544,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.8,
+    "et0_mm": 8.5
+   },
+   "forecast_pct": 9.138,
+   "observed_pct": 8.73,
+   "persistence_pct": 8.76,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.76,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.138,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 25.5
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.5,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-14",
+   "target_date": "2026-06-17",
+   "inputs": {
+    "soil_moisture_pct": 8.53,
+    "ndvi": 0.4544,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.35,
+    "et0_mm": 7.77
+   },
+   "forecast_pct": 9.0132,
+   "observed_pct": 8.76,
+   "persistence_pct": 8.53,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.53,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0132,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.31
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.77,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-15",
+   "target_date": "2026-06-18",
+   "inputs": {
+    "soil_moisture_pct": 8.73,
+    "ndvi": 0.4544,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.44,
+    "et0_mm": 10.06
+   },
+   "forecast_pct": 9.0782,
+   "observed_pct": 8.61,
+   "persistence_pct": 8.73,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.73,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0782,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 30.18
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 10.06,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-17",
+   "target_date": "2026-06-20",
+   "inputs": {
+    "soil_moisture_pct": 8.76,
+    "ndvi": 0.4544,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 34.83,
+    "et0_mm": 9.41
+   },
+   "forecast_pct": 9.0346,
+   "observed_pct": 9.95,
+   "persistence_pct": 8.76,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.76,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0346,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 28.23
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.41,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-19",
+   "target_date": "2026-06-22",
+   "inputs": {
+    "soil_moisture_pct": 8.94,
+    "ndvi": 0.3997,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.66,
+    "et0_mm": 7.84
+   },
+   "forecast_pct": 9.3461,
+   "observed_pct": 8.79,
+   "persistence_pct": 8.94,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.94,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3461,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 23.52
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.84,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-20",
+   "target_date": "2026-06-23",
+   "inputs": {
+    "soil_moisture_pct": 9.95,
+    "ndvi": 0.3997,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.32,
+    "et0_mm": 9.43
+   },
+   "forecast_pct": 9.7357,
+   "observed_pct": 8.37,
+   "persistence_pct": 9.95,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.95,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.7357,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 28.29
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.43,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-22",
+   "target_date": "2026-06-25",
+   "inputs": {
+    "soil_moisture_pct": 8.79,
+    "ndvi": 0.3997,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 36.63,
+    "et0_mm": 8.1
+   },
+   "forecast_pct": 9.3567,
+   "observed_pct": 9.01,
+   "persistence_pct": 8.79,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.79,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3567,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 24.3
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.1,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-23",
+   "target_date": "2026-06-26",
+   "inputs": {
+    "soil_moisture_pct": 8.37,
+    "ndvi": 0.3997,
+    "rainfall_7d_mm": 2.56,
+    "temperature_c": 35.91,
+    "et0_mm": 8.69
+   },
+   "forecast_pct": 9.7994,
+   "observed_pct": 9.19,
+   "persistence_pct": 8.37,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.37,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.7994,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.56,
+     "reference": 26.07
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.69,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-25",
+   "target_date": "2026-06-28",
+   "inputs": {
+    "soil_moisture_pct": 9.01,
+    "ndvi": 0.3997,
+    "rainfall_7d_mm": 4.12,
+    "temperature_c": 36.9,
+    "et0_mm": 7.51
+   },
+   "forecast_pct": 9.5424,
+   "observed_pct": 10.46,
+   "persistence_pct": 9.01,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.01,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5424,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 4.12,
+     "reference": 22.53
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.51,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-27",
+   "target_date": "2026-06-30",
+   "inputs": {
+    "soil_moisture_pct": 9.1,
+    "ndvi": 0.4467,
+    "rainfall_7d_mm": 4.12,
+    "temperature_c": 33.67,
+    "et0_mm": 7.63
+   },
+   "forecast_pct": 9.1877,
+   "observed_pct": 8.36,
+   "persistence_pct": 9.1,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.1,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1877,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 4.12,
+     "reference": 22.89
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.63,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-28",
+   "target_date": "2026-07-01",
+   "inputs": {
+    "soil_moisture_pct": 10.46,
+    "ndvi": 0.4467,
+    "rainfall_7d_mm": 4.12,
+    "temperature_c": 34.6,
+    "et0_mm": 7.66
+   },
+   "forecast_pct": 10.293,
+   "observed_pct": 9.14,
+   "persistence_pct": 10.46,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 10.46,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.293,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 4.12,
+     "reference": 22.98
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.66,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-06-30",
+   "target_date": "2026-07-03",
+   "inputs": {
+    "soil_moisture_pct": 8.36,
+    "ndvi": 0.4467,
+    "rainfall_7d_mm": 1.56,
+    "temperature_c": 36.7,
+    "et0_mm": 9.11
+   },
+   "forecast_pct": 9.4741,
+   "observed_pct": 8.89,
+   "persistence_pct": 8.36,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.36,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.4741,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.56,
+     "reference": 27.33
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.11,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-01",
+   "target_date": "2026-07-04",
+   "inputs": {
+    "soil_moisture_pct": 9.14,
+    "ndvi": 0.4467,
+    "rainfall_7d_mm": 0.43,
+    "temperature_c": 36.89,
+    "et0_mm": 9.48
+   },
+   "forecast_pct": 9.1693,
+   "observed_pct": 11.85,
+   "persistence_pct": 9.14,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.14,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1693,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.43,
+     "reference": 28.44
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.48,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-03",
+   "target_date": "2026-07-06",
+   "inputs": {
+    "soil_moisture_pct": 8.89,
+    "ndvi": 0.4467,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 35.26,
+    "et0_mm": 7.3
+   },
+   "forecast_pct": 9.0632,
+   "observed_pct": 8.72,
+   "persistence_pct": 8.89,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.89,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0632,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 21.9
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.3,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-05",
+   "target_date": "2026-07-08",
+   "inputs": {
+    "soil_moisture_pct": 9.42,
+    "ndvi": 0.4081,
+    "rainfall_7d_mm": 0.15,
+    "temperature_c": 37.64,
+    "et0_mm": 9.73
+   },
+   "forecast_pct": 8.9974,
+   "observed_pct": 8.2,
+   "persistence_pct": 9.42,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.42,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.9974,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.15,
+     "reference": 29.19
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.73,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-06",
+   "target_date": "2026-07-09",
+   "inputs": {
+    "soil_moisture_pct": 8.72,
+    "ndvi": 0.4081,
+    "rainfall_7d_mm": 0.15,
+    "temperature_c": 36.34,
+    "et0_mm": 11.49
+   },
+   "forecast_pct": 9.3282,
+   "observed_pct": 8.51,
+   "persistence_pct": 8.72,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.72,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3282,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.15,
+     "reference": 34.47
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 11.49,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-08",
+   "target_date": "2026-07-11",
+   "inputs": {
+    "soil_moisture_pct": 8.2,
+    "ndvi": 0.4081,
+    "rainfall_7d_mm": 0.15,
+    "temperature_c": 38.14,
+    "et0_mm": 7.84
+   },
+   "forecast_pct": 9.3611,
+   "observed_pct": 9.54,
+   "persistence_pct": 8.2,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.2,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3611,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.15,
+     "reference": 23.52
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.84,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-09",
+   "target_date": "2026-07-12",
+   "inputs": {
+    "soil_moisture_pct": 8.51,
+    "ndvi": 0.4081,
+    "rainfall_7d_mm": 0.15,
+    "temperature_c": 39.14,
+    "et0_mm": 6.82
+   },
+   "forecast_pct": 9.1162,
+   "observed_pct": 8.64,
+   "persistence_pct": 8.51,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.51,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1162,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.15,
+     "reference": 20.46
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.82,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-11",
+   "target_date": "2026-07-14",
+   "inputs": {
+    "soil_moisture_pct": 9.54,
+    "ndvi": 0.4081,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.33,
+    "et0_mm": 10.74
+   },
+   "forecast_pct": 9.2282,
+   "observed_pct": 8.71,
+   "persistence_pct": 9.54,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.54,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.2282,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 32.22
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 10.74,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-13",
+   "target_date": "2026-07-16",
+   "inputs": {
+    "soil_moisture_pct": 8.52,
+    "ndvi": 0.4122,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.97,
+    "et0_mm": 9.76
+   },
+   "forecast_pct": 9.0121,
+   "observed_pct": 8.66,
+   "persistence_pct": 8.52,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.52,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0121,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 29.28
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.76,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-14",
+   "target_date": "2026-07-17",
+   "inputs": {
+    "soil_moisture_pct": 8.71,
+    "ndvi": 0.4122,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 38.24,
+    "et0_mm": 8.7
+   },
+   "forecast_pct": 9.1247,
+   "observed_pct": 8.92,
+   "persistence_pct": 8.71,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.71,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1247,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 26.1
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.7,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-16",
+   "target_date": "2026-07-19",
+   "inputs": {
+    "soil_moisture_pct": 8.66,
+    "ndvi": 0.4122,
+    "rainfall_7d_mm": 0.2,
+    "temperature_c": 33.99,
+    "et0_mm": 8.56
+   },
+   "forecast_pct": 9.1751,
+   "observed_pct": 10.28,
+   "persistence_pct": 8.66,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.66,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1751,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.2,
+     "reference": 25.68
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.56,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-17",
+   "target_date": "2026-07-20",
+   "inputs": {
+    "soil_moisture_pct": 8.92,
+    "ndvi": 0.4122,
+    "rainfall_7d_mm": 0.29,
+    "temperature_c": 34.23,
+    "et0_mm": 7.97
+   },
+   "forecast_pct": 9.5029,
+   "observed_pct": 9.86,
+   "persistence_pct": 8.92,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.92,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5029,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.29,
+     "reference": 23.91
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.97,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-19",
+   "target_date": "2026-07-22",
+   "inputs": {
+    "soil_moisture_pct": 10.28,
+    "ndvi": 0.4122,
+    "rainfall_7d_mm": 0.77,
+    "temperature_c": 37.49,
+    "et0_mm": 7.83
+   },
+   "forecast_pct": 11.1594,
+   "observed_pct": 8.48,
+   "persistence_pct": 10.28,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 10.28,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 11.1594,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.77,
+     "reference": 23.49
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.83,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-21",
+   "target_date": "2026-07-24",
+   "inputs": {
+    "soil_moisture_pct": 9.46,
+    "ndvi": 0.3911,
+    "rainfall_7d_mm": 0.77,
+    "temperature_c": 38.87,
+    "et0_mm": 11.32
+   },
+   "forecast_pct": 9.6414,
+   "observed_pct": 7.88,
+   "persistence_pct": 9.46,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.46,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.6414,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.77,
+     "reference": 33.96
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 11.32,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-22",
+   "target_date": "2026-07-25",
+   "inputs": {
+    "soil_moisture_pct": 8.48,
+    "ndvi": 0.3911,
+    "rainfall_7d_mm": 0.68,
+    "temperature_c": 38.2,
+    "et0_mm": 11.28
+   },
+   "forecast_pct": 9.6423,
+   "observed_pct": 9.51,
+   "persistence_pct": 8.48,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.48,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.6423,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.68,
+     "reference": 33.84
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 11.28,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-24",
+   "target_date": "2026-07-27",
+   "inputs": {
+    "soil_moisture_pct": 7.88,
+    "ndvi": 0.3911,
+    "rainfall_7d_mm": 0.48,
+    "temperature_c": 38.2,
+    "et0_mm": 8.37
+   },
+   "forecast_pct": 10.1209,
+   "observed_pct": 9.18,
+   "persistence_pct": 7.88,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.88,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.1209,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.48,
+     "reference": 25.11
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.37,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-25",
+   "target_date": "2026-07-28",
+   "inputs": {
+    "soil_moisture_pct": 9.51,
+    "ndvi": 0.3911,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.62,
+    "et0_mm": 9.22
+   },
+   "forecast_pct": 9.296,
+   "observed_pct": 11.19,
+   "persistence_pct": 9.51,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.51,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.296,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 27.66
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 9.22,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-27",
+   "target_date": "2026-07-30",
+   "inputs": {
+    "soil_moisture_pct": 9.18,
+    "ndvi": 0.3911,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 37.24,
+    "et0_mm": 6.92
+   },
+   "forecast_pct": 9.2392,
+   "observed_pct": 8.52,
+   "persistence_pct": 9.18,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.18,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.2392,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 20.76
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.92,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-29",
+   "target_date": "2026-08-01",
+   "inputs": {
+    "soil_moisture_pct": 9.29,
+    "ndvi": 0.393,
+    "rainfall_7d_mm": 0.52,
+    "temperature_c": 37.23,
+    "et0_mm": 8.85
+   },
+   "forecast_pct": 9.5446,
+   "observed_pct": 8.71,
+   "persistence_pct": 9.29,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.29,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5446,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.52,
+     "reference": 26.55
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.85,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-07-30",
+   "target_date": "2026-08-02",
+   "inputs": {
+    "soil_moisture_pct": 8.52,
+    "ndvi": 0.393,
+    "rainfall_7d_mm": 0.89,
+    "temperature_c": 37.63,
+    "et0_mm": 7.98
+   },
+   "forecast_pct": 9.8201,
+   "observed_pct": 8.53,
+   "persistence_pct": 8.52,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.52,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.8201,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.89,
+     "reference": 23.94
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.98,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-01",
+   "target_date": "2026-08-04",
+   "inputs": {
+    "soil_moisture_pct": 8.71,
+    "ndvi": 0.393,
+    "rainfall_7d_mm": 2.8,
+    "temperature_c": 38.55,
+    "et0_mm": 7.53
+   },
+   "forecast_pct": 9.4855,
+   "observed_pct": 8.65,
+   "persistence_pct": 8.71,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.71,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.4855,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.8,
+     "reference": 22.59
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.53,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-02",
+   "target_date": "2026-08-05",
+   "inputs": {
+    "soil_moisture_pct": 8.53,
+    "ndvi": 0.393,
+    "rainfall_7d_mm": 2.84,
+    "temperature_c": 38.35,
+    "et0_mm": 6.54
+   },
+   "forecast_pct": 9.4243,
+   "observed_pct": 9.45,
+   "persistence_pct": 8.53,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.53,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.4243,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.84,
+     "reference": 19.62
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.54,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-04",
+   "target_date": "2026-08-07",
+   "inputs": {
+    "soil_moisture_pct": 8.65,
+    "ndvi": 0.393,
+    "rainfall_7d_mm": 3.33,
+    "temperature_c": 37.46,
+    "et0_mm": 7.81
+   },
+   "forecast_pct": 9.9028,
+   "observed_pct": 11.16,
+   "persistence_pct": 8.65,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.65,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9028,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 3.33,
+     "reference": 23.43
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.81,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-06",
+   "target_date": "2026-08-09",
+   "inputs": {
+    "soil_moisture_pct": 9.37,
+    "ndvi": 0.2954,
+    "rainfall_7d_mm": 3.96,
+    "temperature_c": 38.67,
+    "et0_mm": 8.32
+   },
+   "forecast_pct": 10.0582,
+   "observed_pct": 11.76,
+   "persistence_pct": 9.37,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.37,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.0582,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 3.96,
+     "reference": 24.96
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.32,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-07",
+   "target_date": "2026-08-10",
+   "inputs": {
+    "soil_moisture_pct": 11.16,
+    "ndvi": 0.2954,
+    "rainfall_7d_mm": 3.96,
+    "temperature_c": 38.2,
+    "et0_mm": 8.14
+   },
+   "forecast_pct": 10.9091,
+   "observed_pct": 11.36,
+   "persistence_pct": 11.16,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 11.16,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.9091,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 3.96,
+     "reference": 24.42
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.14,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-09",
+   "target_date": "2026-08-12",
+   "inputs": {
+    "soil_moisture_pct": 11.76,
+    "ndvi": 0.2954,
+    "rainfall_7d_mm": 5.71,
+    "temperature_c": 36.49,
+    "et0_mm": 7.76
+   },
+   "forecast_pct": 10.7955,
+   "observed_pct": 9.28,
+   "persistence_pct": 11.76,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 11.76,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.7955,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 5.71,
+     "reference": 23.28
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.76,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-10",
+   "target_date": "2026-08-13",
+   "inputs": {
+    "soil_moisture_pct": 11.36,
+    "ndvi": 0.2954,
+    "rainfall_7d_mm": 5.73,
+    "temperature_c": 36.3,
+    "et0_mm": 7.37
+   },
+   "forecast_pct": 10.552,
+   "observed_pct": 8.28,
+   "persistence_pct": 11.36,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 11.36,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.552,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 5.73,
+     "reference": 22.11
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.37,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-12",
+   "target_date": "2026-08-15",
+   "inputs": {
+    "soil_moisture_pct": 9.28,
+    "ndvi": 0.2954,
+    "rainfall_7d_mm": 4.01,
+    "temperature_c": 37.32,
+    "et0_mm": 8.14
+   },
+   "forecast_pct": 10.0597,
+   "observed_pct": 8.73,
+   "persistence_pct": 9.28,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.28,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.0597,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 4.01,
+     "reference": 24.42
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.14,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-14",
+   "target_date": "2026-08-17",
+   "inputs": {
+    "soil_moisture_pct": 8.82,
+    "ndvi": 0.4073,
+    "rainfall_7d_mm": 3.72,
+    "temperature_c": 37.05,
+    "et0_mm": 8.26
+   },
+   "forecast_pct": 9.7273,
+   "observed_pct": 8.55,
+   "persistence_pct": 8.82,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.82,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.7273,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 3.72,
+     "reference": 24.78
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.26,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-15",
+   "target_date": "2026-08-18",
+   "inputs": {
+    "soil_moisture_pct": 8.73,
+    "ndvi": 0.4073,
+    "rainfall_7d_mm": 3.72,
+    "temperature_c": 37.01,
+    "et0_mm": 8.75
+   },
+   "forecast_pct": 9.7739,
+   "observed_pct": 8.74,
+   "persistence_pct": 8.73,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.73,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.7739,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 3.72,
+     "reference": 26.25
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.75,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-17",
+   "target_date": "2026-08-20",
+   "inputs": {
+    "soil_moisture_pct": 8.55,
+    "ndvi": 0.4073,
+    "rainfall_7d_mm": 0.01,
+    "temperature_c": 37.95,
+    "et0_mm": 7.26
+   },
+   "forecast_pct": 9.0155,
+   "observed_pct": 9.28,
+   "persistence_pct": 8.55,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.55,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0155,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.01,
+     "reference": 21.78
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.26,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-18",
+   "target_date": "2026-08-21",
+   "inputs": {
+    "soil_moisture_pct": 8.74,
+    "ndvi": 0.4073,
+    "rainfall_7d_mm": 0.01,
+    "temperature_c": 37.05,
+    "et0_mm": 7.27
+   },
+   "forecast_pct": 9.1871,
+   "observed_pct": 10.59,
+   "persistence_pct": 8.74,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.74,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.1871,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.01,
+     "reference": 21.81
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.27,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-20",
+   "target_date": "2026-08-23",
+   "inputs": {
+    "soil_moisture_pct": 9.28,
+    "ndvi": 0.4073,
+    "rainfall_7d_mm": 0.32,
+    "temperature_c": 37.23,
+    "et0_mm": 7.48
+   },
+   "forecast_pct": 9.0531,
+   "observed_pct": 9.24,
+   "persistence_pct": 9.28,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.28,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0531,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.32,
+     "reference": 22.44
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.48,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-22",
+   "target_date": "2026-08-25",
+   "inputs": {
+    "soil_moisture_pct": 10.31,
+    "ndvi": 0.3266,
+    "rainfall_7d_mm": 1.44,
+    "temperature_c": 36.71,
+    "et0_mm": 5.86
+   },
+   "forecast_pct": 11.1488,
+   "observed_pct": 9.59,
+   "persistence_pct": 10.31,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 10.31,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 11.1488,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.44,
+     "reference": 17.58
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 5.86,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-23",
+   "target_date": "2026-08-26",
+   "inputs": {
+    "soil_moisture_pct": 9.24,
+    "ndvi": 0.3266,
+    "rainfall_7d_mm": 1.44,
+    "temperature_c": 37.34,
+    "et0_mm": 6.54
+   },
+   "forecast_pct": 9.8142,
+   "observed_pct": 9.16,
+   "persistence_pct": 9.24,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.24,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.8142,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.44,
+     "reference": 19.62
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.54,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-25",
+   "target_date": "2026-08-28",
+   "inputs": {
+    "soil_moisture_pct": 9.59,
+    "ndvi": 0.3266,
+    "rainfall_7d_mm": 1.72,
+    "temperature_c": 36.62,
+    "et0_mm": 8.25
+   },
+   "forecast_pct": 10.3998,
+   "observed_pct": 9.38,
+   "persistence_pct": 9.59,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.59,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.3998,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.72,
+     "reference": 24.75
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.25,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-26",
+   "target_date": "2026-08-29",
+   "inputs": {
+    "soil_moisture_pct": 9.16,
+    "ndvi": 0.3266,
+    "rainfall_7d_mm": 1.72,
+    "temperature_c": 35.98,
+    "et0_mm": 7.23
+   },
+   "forecast_pct": 10.2013,
+   "observed_pct": 8.78,
+   "persistence_pct": 9.16,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.16,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 10.2013,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.72,
+     "reference": 21.69
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.23,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-28",
+   "target_date": "2026-08-31",
+   "inputs": {
+    "soil_moisture_pct": 9.38,
+    "ndvi": 0.3266,
+    "rainfall_7d_mm": 0.36,
+    "temperature_c": 37.24,
+    "et0_mm": 6.79
+   },
+   "forecast_pct": 9.32,
+   "observed_pct": 8.75,
+   "persistence_pct": 9.38,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.38,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.32,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.36,
+     "reference": 20.37
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.79,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-30",
+   "target_date": "2026-09-02",
+   "inputs": {
+    "soil_moisture_pct": 9.82,
+    "ndvi": 0.3876,
+    "rainfall_7d_mm": 0.36,
+    "temperature_c": 36.09,
+    "et0_mm": 8.54
+   },
+   "forecast_pct": 9.445,
+   "observed_pct": 8.66,
+   "persistence_pct": 9.82,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.82,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.445,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.36,
+     "reference": 25.62
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.54,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-08-31",
+   "target_date": "2026-09-03",
+   "inputs": {
+    "soil_moisture_pct": 8.75,
+    "ndvi": 0.3876,
+    "rainfall_7d_mm": 0.07,
+    "temperature_c": 36.85,
+    "et0_mm": 8.05
+   },
+   "forecast_pct": 9.5306,
+   "observed_pct": 8.95,
+   "persistence_pct": 8.75,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.75,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5306,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.07,
+     "reference": 24.15
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.05,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-02",
+   "target_date": "2026-09-05",
+   "inputs": {
+    "soil_moisture_pct": 8.66,
+    "ndvi": 0.3876,
+    "rainfall_7d_mm": 0.07,
+    "temperature_c": 35.75,
+    "et0_mm": 7.18
+   },
+   "forecast_pct": 9.3458,
+   "observed_pct": 9.89,
+   "persistence_pct": 8.66,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.66,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3458,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.07,
+     "reference": 21.54
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.18,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-03",
+   "target_date": "2026-09-06",
+   "inputs": {
+    "soil_moisture_pct": 8.95,
+    "ndvi": 0.3876,
+    "rainfall_7d_mm": 0.09,
+    "temperature_c": 34.39,
+    "et0_mm": 6.69
+   },
+   "forecast_pct": 9.3298,
+   "observed_pct": 12.21,
+   "persistence_pct": 8.95,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.95,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.3298,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.09,
+     "reference": 20.07
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.69,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-05",
+   "target_date": "2026-09-08",
+   "inputs": {
+    "soil_moisture_pct": 9.89,
+    "ndvi": 0.3876,
+    "rainfall_7d_mm": 0.11,
+    "temperature_c": 34.0,
+    "et0_mm": 7.34
+   },
+   "forecast_pct": 9.6216,
+   "observed_pct": 8.53,
+   "persistence_pct": 9.89,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.89,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.6216,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.11,
+     "reference": 22.02
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.34,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-07",
+   "target_date": "2026-09-10",
+   "inputs": {
+    "soil_moisture_pct": 11.49,
+    "ndvi": 0.1782,
+    "rainfall_7d_mm": 1.38,
+    "temperature_c": 34.92,
+    "et0_mm": 7.56
+   },
+   "forecast_pct": 11.0439,
+   "observed_pct": 8.26,
+   "persistence_pct": 11.49,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 11.49,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 11.0439,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.38,
+     "reference": 22.68
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.56,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-08",
+   "target_date": "2026-09-11",
+   "inputs": {
+    "soil_moisture_pct": 8.53,
+    "ndvi": 0.1782,
+    "rainfall_7d_mm": 1.38,
+    "temperature_c": 35.12,
+    "et0_mm": 8.84
+   },
+   "forecast_pct": 9.9304,
+   "observed_pct": 8.67,
+   "persistence_pct": 8.53,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.53,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9304,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.38,
+     "reference": 26.52
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 8.84,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-10",
+   "target_date": "2026-09-13",
+   "inputs": {
+    "soil_moisture_pct": 8.26,
+    "ndvi": 0.1782,
+    "rainfall_7d_mm": 1.29,
+    "temperature_c": 35.63,
+    "et0_mm": 7.04
+   },
+   "forecast_pct": 9.521,
+   "observed_pct": 8.87,
+   "persistence_pct": 8.26,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.26,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.521,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.29,
+     "reference": 21.12
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.04,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-11",
+   "target_date": "2026-09-14",
+   "inputs": {
+    "soil_moisture_pct": 8.67,
+    "ndvi": 0.1782,
+    "rainfall_7d_mm": 1.27,
+    "temperature_c": 35.31,
+    "et0_mm": 7.47
+   },
+   "forecast_pct": 9.5129,
+   "observed_pct": 9.66,
+   "persistence_pct": 8.67,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.67,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5129,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 1.27,
+     "reference": 22.41
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.47,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-13",
+   "target_date": "2026-09-16",
+   "inputs": {
+    "soil_moisture_pct": 8.87,
+    "ndvi": 0.1782,
+    "rainfall_7d_mm": 0.52,
+    "temperature_c": 32.13,
+    "et0_mm": 6.67
+   },
+   "forecast_pct": 8.9145,
+   "observed_pct": 8.74,
+   "persistence_pct": 8.87,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.87,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.9145,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.52,
+     "reference": 20.01
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.67,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-15",
+   "target_date": "2026-09-18",
+   "inputs": {
+    "soil_moisture_pct": 9.13,
+    "ndvi": 0.4856,
+    "rainfall_7d_mm": 2.12,
+    "temperature_c": 33.65,
+    "et0_mm": 7.56
+   },
+   "forecast_pct": 9.998,
+   "observed_pct": 9.0,
+   "persistence_pct": 9.13,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.13,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.998,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.12,
+     "reference": 22.68
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.56,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-16",
+   "target_date": "2026-09-19",
+   "inputs": {
+    "soil_moisture_pct": 8.74,
+    "ndvi": 0.4856,
+    "rainfall_7d_mm": 2.12,
+    "temperature_c": 34.28,
+    "et0_mm": 6.95
+   },
+   "forecast_pct": 9.6377,
+   "observed_pct": 8.49,
+   "persistence_pct": 8.74,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.74,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.6377,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.12,
+     "reference": 20.85
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.95,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-18",
+   "target_date": "2026-09-21",
+   "inputs": {
+    "soil_moisture_pct": 9.0,
+    "ndvi": 0.4856,
+    "rainfall_7d_mm": 2.12,
+    "temperature_c": 34.75,
+    "et0_mm": 6.68
+   },
+   "forecast_pct": 9.9923,
+   "observed_pct": 9.02,
+   "persistence_pct": 9.0,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.0,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9923,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.12,
+     "reference": 20.04
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.68,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-19",
+   "target_date": "2026-09-22",
+   "inputs": {
+    "soil_moisture_pct": 8.49,
+    "ndvi": 0.4856,
+    "rainfall_7d_mm": 2.12,
+    "temperature_c": 34.18,
+    "et0_mm": 7.67
+   },
+   "forecast_pct": 9.9515,
+   "observed_pct": 8.3,
+   "persistence_pct": 8.49,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.49,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.9515,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.12,
+     "reference": 23.01
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.67,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-21",
+   "target_date": "2026-09-24",
+   "inputs": {
+    "soil_moisture_pct": 9.02,
+    "ndvi": 0.4856,
+    "rainfall_7d_mm": 2.12,
+    "temperature_c": 32.22,
+    "et0_mm": 7.43
+   },
+   "forecast_pct": 9.5302,
+   "observed_pct": 8.96,
+   "persistence_pct": 9.02,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.02,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.5302,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 2.12,
+     "reference": 22.29
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.43,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-23",
+   "target_date": "2026-09-26",
+   "inputs": {
+    "soil_moisture_pct": 8.69,
+    "ndvi": 0.4799,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 32.89,
+    "et0_mm": 6.89
+   },
+   "forecast_pct": 8.9978,
+   "observed_pct": 7.71,
+   "persistence_pct": 8.69,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 8.69,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.9978,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 20.67
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.89,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-24",
+   "target_date": "2026-09-27",
+   "inputs": {
+    "soil_moisture_pct": 8.96,
+    "ndvi": 0.4799,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 33.58,
+    "et0_mm": 7.32
+   },
+   "forecast_pct": 8.955,
+   "observed_pct": 9.1,
+   "persistence_pct": 8.96,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 8.96,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 8.955,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 21.96
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 7.32,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-26",
+   "target_date": "2026-09-29",
+   "inputs": {
+    "soil_moisture_pct": 7.71,
+    "ndvi": 0.4799,
+    "rainfall_7d_mm": 0.0,
+    "temperature_c": 34.36,
+    "et0_mm": 6.1
+   },
+   "forecast_pct": 9.2446,
+   "observed_pct": 9.18,
+   "persistence_pct": 7.71,
+   "level": "irrigate",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": true,
+     "value": 7.71,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.2446,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.0,
+     "reference": 18.3
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.1,
+     "reference": 5.355
+    }
+   ]
+  },
+  {
+   "date": "2026-09-27",
+   "target_date": "2026-09-30",
+   "inputs": {
+    "soil_moisture_pct": 9.1,
+    "ndvi": 0.4799,
+    "rainfall_7d_mm": 0.21,
+    "temperature_c": 33.19,
+    "et0_mm": 6.78
+   },
+   "forecast_pct": 9.0873,
+   "observed_pct": 8.7,
+   "persistence_pct": 9.1,
+   "level": "monitor",
+   "checks": [
+    {
+     "name": "soil_now_dry",
+     "met": false,
+     "value": 9.1,
+     "reference": 8.79
+    },
+    {
+     "name": "forecast_dry",
+     "met": false,
+     "value": 9.0873,
+     "reference": 8.79
+    },
+    {
+     "name": "rain_below_demand",
+     "met": true,
+     "value": 0.21,
+     "reference": 20.34
+    },
+    {
+     "name": "high_demand",
+     "met": true,
+     "value": 6.78,
+     "reference": 5.355
+    }
+   ]
+  }
+ ]
+}

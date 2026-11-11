@@ -386,6 +386,28 @@ TEXT = {
             "by recent rain and air temperature. This describes how the model uses its inputs, not physical cause."
         ),
         "perf_lang": "",
+        "rp_t": "Replay a real day",
+        "rp_intro": (
+            "Pick a day from the test period to see what Red Oasis would have said that morning, "
+            "and what SMAP actually observed three days later."
+        ),
+        "rp_pick": "Day",
+        "rp_inputs": "Inputs available that day: soil moisture {soil:.2f}%, NDVI {ndvi}, rain in the last 7 days {rain}, air temperature {temp:.1f} °C, ET0 {et0}.",
+        "rp_level": "Level on {d}",
+        "rp_fc": "Forecast for {d}",
+        "rp_obs": "Observed by SMAP on {d}",
+        "rp_err": "Forecast error",
+        "rp_err_line": "Error: model {m:.2f} points, 'same as today' {p:.2f} points.",
+        "rp_better": "The model was closer than 'same as today' on this day.",
+        "rp_worse": "'Same as today' was closer than the model on this day.",
+        "rp_note": (
+            "These forecasts come from the version of the model trained only on days up to {end}, "
+            "so none of these test days were seen in training. The rule's site medians come from the "
+            "same training days."
+        ),
+        "rp_na": "not available",
+        "rp_mm": "{:.1f} mm",
+        "rp_mmday": "{:.2f} mm/day",
         "env": "Operating environments",
         "tab_earth": "Earth",
         "tab_mars": "Mars (concept)",
@@ -672,6 +694,27 @@ TEXT = {
             "الهواء. هذا يصف كيف يستخدم النموذج مدخلاته، لا السبب الفيزيائي."
         ),
         "perf_lang": "عناوين الرسوم باللغة الإنجليزية.",
+        "rp_t": "أعد تشغيل يوم حقيقي",
+        "rp_intro": (
+            "اختر يوماً من فترة الاختبار لترى ماذا كان سيقول Red Oasis صباح ذلك اليوم، "
+            "وماذا رصد SMAP فعلاً بعد ثلاثة أيام."
+        ),
+        "rp_pick": "اليوم",
+        "rp_inputs": "المدخلات المتاحة في ذلك اليوم: رطوبة التربة {soil:.2f}%، NDVI {ndvi}، أمطار آخر 7 أيام {rain}، حرارة الهواء {temp:.1f} °م، ET0 {et0}.",
+        "rp_level": "المستوى في {d}",
+        "rp_fc": "التوقع ليوم {d}",
+        "rp_obs": "ما رصده SMAP في {d}",
+        "rp_err": "خطأ التوقع",
+        "rp_err_line": "الخطأ: النموذج {m:.2f} نقطة، «مثل اليوم» {p:.2f} نقطة.",
+        "rp_better": "كان النموذج أقرب من «مثل اليوم» في هذا اليوم.",
+        "rp_worse": "كان «مثل اليوم» أقرب من النموذج في هذا اليوم.",
+        "rp_note": (
+            "هذه التوقعات من نسخة النموذج المدرَّبة فقط على الأيام حتى {end}، لذا لم يرَ النموذج أياً "
+            "من أيام الاختبار هذه أثناء التدريب. ووسيطات القاعدة مأخوذة من أيام التدريب نفسها."
+        ),
+        "rp_na": "غير متاح",
+        "rp_mm": "{:.1f} ملم",
+        "rp_mmday": "{:.2f} ملم/يوم",
         "env": "بيئات التشغيل",
         "tab_earth": "الأرض",
         "tab_mars": "المريخ (مفهوم)",
@@ -1266,6 +1309,59 @@ if all((FIGURES_DIR / name).exists() for _, name, _ in _FIGURES):
         with tab:
             st.image(str(FIGURES_DIR / name))
             st.caption(t[cap] + (" " + t["perf_lang"] if t["perf_lang"] else ""))
+
+# Replay a real day: precomputed by model/replay.py from the evaluation-period
+# model (trained only on days before the test period), so there is no leakage.
+REPLAY_FILE = FIGURES_DIR / "replay_days.json"
+
+
+@st.cache_data
+def load_replay(path: str, mtime: float):
+    import json
+
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+try:
+    _replay = load_replay(str(REPLAY_FILE), REPLAY_FILE.stat().st_mtime)
+    _days = {d["date"]: d for d in _replay["days"]}
+except Exception:
+    _replay, _days = None, {}
+
+if _days:
+    st.subheader(t["rp_t"])
+    st.write(t["rp_intro"])
+    _dates = list(_days)
+    _default = "2026-07-14" if "2026-07-14" in _days else _dates[len(_dates) // 2]
+    _pick = st.select_slider(t["rp_pick"], options=_dates, value=_default, key="replay_day")
+    day = _days[_pick]
+    _in = day["inputs"]
+
+    def _fmt(v, pattern):
+        return t["rp_na"] if v is None else pattern.format(v)
+
+    st.caption(t["rp_inputs"].format(
+        soil=_in["soil_moisture_pct"],
+        ndvi=_fmt(_in["ndvi"], "{:.2f}"),
+        rain=_fmt(_in["rainfall_7d_mm"], t["rp_mm"]),
+        temp=_in["temperature_c"],
+        et0=_fmt(_in["et0_mm"], t["rp_mmday"]),
+    ))
+    _colour = {"irrigate": "#b23a22", "monitor": "#b7791f", "none": "#2f7d4f"}[day["level"]]
+    st.markdown(
+        f'<div class="ro-result" style="--c:{_colour}"><div>{t["rp_level"].format(d=day["date"])}</div>'
+        f'<div class="lvl">{t[day["level"]]}</div></div>',
+        unsafe_allow_html=True,
+    )
+    _err_m = abs(day["forecast_pct"] - day["observed_pct"])
+    _err_p = abs(day["persistence_pct"] - day["observed_pct"])
+    r1, r2, r3 = st.columns(3)
+    r1.metric(t["rp_fc"].format(d=day["target_date"]), f"{day['forecast_pct']:.1f}%")
+    r2.metric(t["rp_obs"].format(d=day["target_date"]), f"{day['observed_pct']:.1f}%")
+    r3.metric(t["rp_err"], f"{_err_m:.2f}")
+    st.write(t["rp_err_line"].format(m=_err_m, p=_err_p) + " "
+             + (t["rp_better"] if _err_m < _err_p else t["rp_worse"]))
+    st.caption(t["rp_note"].format(end=_replay["train_period"][1]))
 
 # ======================================================================
 # OPERATING ENVIRONMENTS
