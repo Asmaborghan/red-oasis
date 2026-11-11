@@ -6,7 +6,7 @@
 
 **Live app:** https://red-oasis.streamlit.app/ (English and Arabic)
 
-**Demo video (60 seconds):** [Watch on Google Drive](https://drive.google.com/file/d/1jPH7NvLFWnesFxPjYfnqHF8l89gn0lya/view?usp=drive_link)
+**Demo video (30 seconds):** [Watch on Google Drive](https://drive.google.com/file/d/1ag-Y3qmo-SBfBYtYSwIQ9zxAe4Qq5TBy/view?usp=sharing)
 
 ## What the app shows
 
