@@ -262,7 +262,7 @@ TEXT = {
         "planned": "Planned",
         "used": "Used (Dariz, 2024-2026)",
         "soil": "Soil moisture",
-        "soil_use": "Water availability in the root zone",
+        "soil_use": "Surface soil moisture (regional, ~9 km)",
         "ndvi": "Vegetation index (NDVI)",
         "ndvi_use": "Crop health and canopy cover",
         "rain": "Precipitation",
@@ -286,8 +286,8 @@ TEXT = {
         "r_soil_low": "Soil moisture is low ({v:.0f}%).",
         "r_soil_mid": "Soil moisture is moderate ({v:.0f}%).",
         "r_heat": "High air temperature increases water demand ({v:.0f} °C).",
-        "r_veg": "The vegetation index suggests crop stress (NDVI {v:.2f}).",
-        "r_ok": "No stress indicators detected.",
+        "r_veg": "The vegetation index is low (NDVI {v:.2f}).",
+        "r_ok": "None of the warning checks were triggered.",
         "in_rain": "Rainfall, last 7 days (mm)",
         "in_et0": "Reference evapotranspiration ET0 (mm/day)",
         "rain7": "Rainfall, last 7 days",
@@ -303,12 +303,11 @@ TEXT = {
             "signal, and the model is experimental."
         ),
         "ai_location": (
-            "The model was trained on NASA data for a test point near Nizwa "
-            "({site}, {lat:.2f}° N, {lon:.2f}° E), not for the Dariz farm shown above. "
-            "Data for the exact farm location are still pending."
+            "The loaded model was trained on NASA data for a different location "
+            "({site}, {lat:.2f}° N, {lon:.2f}° E), not for the Ad Dariz study point shown above."
         ),
         "ai_missing": (
-            "The trained model is not available yet, so the simple rules "
+            "The trained model could not be loaded, so the simple rules "
             "below are shown instead."
         ),
         "ai_synthetic": (
@@ -523,7 +522,7 @@ TEXT = {
         "planned": "مخطط",
         "used": "مستخدم (الدريز، 2024-2026)",
         "soil": "رطوبة التربة",
-        "soil_use": "توفر المياه في منطقة الجذور",
+        "soil_use": "رطوبة سطح التربة (إقليمية، نحو 9 كم)",
         "ndvi": "مؤشر الغطاء النباتي (NDVI)",
         "ndvi_use": "صحة المحصول وكثافة الغطاء",
         "rain": "الهطول المطري",
@@ -547,8 +546,8 @@ TEXT = {
         "r_soil_low": "رطوبة التربة منخفضة ({v:.0f}%).",
         "r_soil_mid": "رطوبة التربة متوسطة ({v:.0f}%).",
         "r_heat": "ارتفاع الحرارة يزيد الطلب على المياه ({v:.0f} °م).",
-        "r_veg": "مؤشر الغطاء النباتي يدل على إجهاد المحصول (NDVI {v:.2f}).",
-        "r_ok": "لا توجد مؤشرات إجهاد.",
+        "r_veg": "مؤشر الغطاء النباتي منخفض (NDVI {v:.2f}).",
+        "r_ok": "لم يتحقق أي من شروط التنبيه.",
         "in_rain": "الأمطار خلال آخر 7 أيام (مم)",
         "in_et0": "التبخر-نتح المرجعي ET0 (مم/يوم)",
         "rain7": "الأمطار خلال آخر 7 أيام",
@@ -564,11 +563,10 @@ TEXT = {
             "إقليمية (نحو 9 كم)، والنموذج تجريبي."
         ),
         "ai_location": (
-            "دُرِّب النموذج على بيانات ناسا لنقطة اختبار قرب نزوى "
-            "({site}، {lat:.2f}° شمالاً، {lon:.2f}° شرقاً)، وليس لمزرعة الدريز المعروضة أعلاه. "
-            "بيانات موقع المزرعة الدقيق ما زالت قيد الانتظار."
+            "دُرِّب النموذج المحمَّل على بيانات ناسا لموقع مختلف "
+            "({site}، {lat:.2f}° شمالاً، {lon:.2f}° شرقاً)، وليس لنقطة الدراسة في الدريز المعروضة أعلاه."
         ),
-        "ai_missing": "النموذج المدرَّب غير متاح بعد، لذا تُعرض القواعد المبسّطة أدناه.",
+        "ai_missing": "تعذّر تحميل النموذج المدرَّب، لذا تُعرض القواعد المبسّطة أدناه.",
         "ai_synthetic": (
             "اختبار للواجهة: دُرِّب هذا النموذج على بيانات اصطناعية. التوقع "
             "والتوصية والتفسير ليست نتائج حقيقية."
