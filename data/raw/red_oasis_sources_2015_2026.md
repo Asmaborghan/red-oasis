@@ -30,8 +30,9 @@ AppEEARS task ID: `bcc42ced-cf94-4125-85d2-d9e0984742f2` · Generated: 2026-10-3
 - SMAP pixel ≈ 9 km: it describes the **area** around the farm, not one field.
 - SMAP data starts 2015-03-31, so soil moisture is empty before that date.
 - NDVI is a 16-day composite; daily values between composites are interpolated (see flag column).
-- `*_raw` columns are the untouched satellite values. Use them to check the model, use filled columns to train.
+- `*_raw` columns are the untouched satellite values. The model trains on these raw columns; the filled columns are for display only, because they are interpolated from later days.
 - Data accessed through NASA Earthdata (AppEEARS, GES DISC) and the NASA POWER API.
+- **Data credit: NASA.** SMAP (NSIDC DAAC), MODIS and VIIRS NDVI (LP DAAC), GPM IMERG (GES DISC) and the NASA POWER Project.
 - Rain is from GPM IMERG for every day. NASA POWER `PRECTOTCORR` was checked for this point and not used: its values were about 24× too high (e.g. 8,279 mm on 2024-08-18). GPM yearly totals here are 14–353 mm.
 - `rain_suspect = 1`: GPM shows >20 mm but SMAP soil moisture did not rise and air humidity stayed <50%. Likely a satellite rain artifact; exclude these days when training. Flagged days: 2016-11-09, 2021-04-25, 2021-05-03, 2025-05-25, 2025-05-26.
 - Missing share per column: `solar_mj_m2` 0.1%, `et0_mm` 0.1%, `soil_moisture_raw` 29.6%, `soil_moisture` 4.0%, `ndvi_raw` 87.5%, `ndvi` 0.5%.

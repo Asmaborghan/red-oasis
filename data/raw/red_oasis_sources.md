@@ -23,6 +23,7 @@ AppEEARS task ID: `cd1bbb38-96bd-4a8e-97bd-8788409325e4` · Generated: 2026-10-2
 ## Important notes for the team
 - SMAP pixel ≈ 9 km: it describes the **area** around the farm, not one field.
 - NDVI is a 16-day composite; daily values between composites are interpolated (see flag column).
-- `*_raw` columns are the untouched satellite values. Use them to check the model, use filled columns to train.
+- `*_raw` columns are the untouched satellite values. The model trains on these raw columns; the filled columns are for display only, because they are interpolated from later days.
 - Data accessed through NASA Earthdata (AppEEARS, GES DISC) and the NASA POWER API.
+- **Data credit: NASA.** SMAP (NSIDC DAAC), MODIS and VIIRS NDVI (LP DAAC), GPM IMERG (GES DISC) and the NASA POWER Project.
 - `rain_suspect = 1`: GPM shows >20 mm but SMAP soil moisture did not rise and air humidity stayed <50%. Likely a satellite rain artifact; exclude these days when training.
