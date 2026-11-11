@@ -360,6 +360,32 @@ TEXT = {
             "Soil moisture here changes little except after rain, so simple "
             "baselines are hard to beat."
         ),
+        "perf": "Model performance",
+        "perf_intro": (
+            "Final test on 122 held-out days (18 March to 27 September 2026): average error 1.20 "
+            "percentage points of soil moisture, against 1.31 for the simple 'same as today' forecast. "
+            "On earlier data (cross-validation) the model did not beat that baseline (1.18 vs 1.03), so it "
+            "is labelled experimental. A longer 2015–2026 record was also tested: it did better in "
+            "cross-validation but not on its final test, so it is kept as a comparison only."
+        ),
+        "perf_tab1": "Forecast vs observed",
+        "perf_tab2": "Error with and without rain",
+        "perf_tab3": "What drives the forecast",
+        "perf_cap1": (
+            "The blue line is the forecast made three days earlier; the grey dots are what SMAP observed. "
+            "The forecast follows the general level but is much flatter than reality (spread 1.1 vs 2.8 "
+            "points) and under-predicts sudden wetting after rain, as in late March."
+        ),
+        "perf_cap2": (
+            "Average error on the test days, split by whether it rained in the previous seven days. The model "
+            "is slightly better than 'same as today' in both cases, but errors are more than twice as large "
+            "after rain, when soil moisture changes fastest."
+        ),
+        "perf_cap3": (
+            "Average size of each input's effect on the forecast. Today's soil moisture matters most, followed "
+            "by recent rain and air temperature. This describes how the model uses its inputs, not physical cause."
+        ),
+        "perf_lang": "",
         "env": "Operating environments",
         "tab_earth": "Earth",
         "tab_mars": "Mars (concept)",
@@ -621,6 +647,31 @@ TEXT = {
         "eval_mean_close": (
             "رطوبة التربة هنا قليلة التغير إلا بعد المطر، لذا يصعب التفوق على المراجع البسيطة."
         ),
+        "perf": "أداء النموذج",
+        "perf_intro": (
+            "الاختبار النهائي على 122 يوماً محجوزاً (18 مارس إلى 27 سبتمبر 2026): متوسط الخطأ 1.20 نقطة "
+            "مئوية من رطوبة التربة، مقابل 1.31 لتوقع «مثل اليوم» البسيط. وعلى البيانات الأقدم (التحقق المتقاطع) "
+            "لم يتفوق النموذج على هذا المرجع (1.18 مقابل 1.03)، لذا فهو مصنَّف تجريبياً. واختُبر أيضاً سجل أطول "
+            "(2015–2026): كان أفضل في التحقق المتقاطع لكن ليس في اختباره النهائي، لذا يُحتفظ به للمقارنة فقط."
+        ),
+        "perf_tab1": "التوقع مقابل المرصود",
+        "perf_tab2": "الخطأ مع المطر وبدونه",
+        "perf_tab3": "ما الذي يحرّك التوقع",
+        "perf_cap1": (
+            "الخط الأزرق هو التوقع الذي صدر قبل ثلاثة أيام، والنقاط الرمادية ما رصده SMAP فعلاً. يتبع التوقع "
+            "المستوى العام لكنه أكثر ثباتاً من الواقع بكثير (تشتت 1.1 مقابل 2.8 نقطة)، ويقلّل من الترطّب المفاجئ "
+            "بعد المطر، كما في أواخر مارس."
+        ),
+        "perf_cap2": (
+            "متوسط الخطأ في أيام الاختبار، مقسّماً بحسب هطول المطر خلال الأيام السبعة السابقة. النموذج أفضل "
+            "قليلاً من «مثل اليوم» في الحالتين، لكن الخطأ بعد المطر أكبر بأكثر من الضعف، لأن رطوبة التربة "
+            "تتغير حينها بسرعة."
+        ),
+        "perf_cap3": (
+            "متوسط حجم أثر كل مدخل على التوقع. رطوبة التربة اليوم هي الأهم، تليها الأمطار الأخيرة ثم حرارة "
+            "الهواء. هذا يصف كيف يستخدم النموذج مدخلاته، لا السبب الفيزيائي."
+        ),
+        "perf_lang": "عناوين الرسوم باللغة الإنجليزية.",
         "env": "بيئات التشغيل",
         "tab_earth": "الأرض",
         "tab_mars": "المريخ (مفهوم)",
@@ -1197,6 +1248,24 @@ else:
     st.markdown(f"**{t['why']}**")
     for key, value in reasons:
         st.markdown(f"- {t[key].format(v=value)}" if value is not None else f"- {t[key]}")
+
+# ======================================================================
+# MODEL PERFORMANCE (figures produced by model/figures.py)
+# ======================================================================
+
+FIGURES_DIR = Path(__file__).resolve().parents[1] / "model" / "figures"
+_FIGURES = [
+    ("perf_tab1", "fig1_forecast_vs_actual.png", "perf_cap1"),
+    ("perf_tab2", "fig2_error_rain_vs_no_rain.png", "perf_cap2"),
+    ("perf_tab3", "fig3_shap_summary.png", "perf_cap3"),
+]
+if all((FIGURES_DIR / name).exists() for _, name, _ in _FIGURES):
+    st.header(t["perf"])
+    st.write(t["perf_intro"])
+    for tab, (_, name, cap) in zip(st.tabs([t[k] for k, _, _ in _FIGURES]), _FIGURES):
+        with tab:
+            st.image(str(FIGURES_DIR / name))
+            st.caption(t[cap] + (" " + t["perf_lang"] if t["perf_lang"] else ""))
 
 # ======================================================================
 # OPERATING ENVIRONMENTS
