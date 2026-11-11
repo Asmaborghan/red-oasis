@@ -4,16 +4,14 @@ NASA Space Apps Challenge 2026.
 
 Run locally:  streamlit run app/app.py
 
-Values that belong to other team members are collected in the
-CONFIGURATION block below. Search for "TODO" to find every place
-that still needs a real value.
+Site, research and Mars reference values are collected in the
+CONFIGURATION block below; all interface text is in TRANSLATIONS.
 """
-
-import sys
-from pathlib import Path
 
 import base64
 import io
+import re
+import sys
 from pathlib import Path
 
 import altair as alt
@@ -48,12 +46,12 @@ SITE = {
 # Illustrative thresholds for the demonstration advisor.
 # Soil moisture cut-offs are the 25th and 75th percentile of the Dariz SMAP record
 # (7.0-27.4 %, median 8.8 %), so they describe "dry/normal for this site", not a
-# crop requirement. TODO (Shareefa): replace with crop-specific values when available.
+# crop requirement. Replace with crop-specific values if field calibration becomes available.
 THRESHOLDS = {
     "soil_dry": 8.4,        # forecast soil moisture (%) below this: irrigate
     "soil_moderate": 9.3,   # below this: monitor
     "temp_high": 40,     # air temperature (deg C)
-    "ndvi_low": 0.30,    # vegetation index below which stress is flagged
+    "ndvi_low": 0.30,    # vegetation index below which low vegetation is flagged
 }
 
 # Published values from Shareefa's research brief.
@@ -214,6 +212,24 @@ FEATURE_TEXT = {
     "et0_mm": "et0",
 }
 
+_RANGE_WARNING = re.compile(
+    r"^(\w+)=(\S+) is outside the training data range \((\S+) to (\S+)\)"
+)
+
+
+def localise_warning(warning: str, t: dict) -> str | None:
+    """Show model warnings in the selected language. Internal notes that are
+    not meant for users (synthetic-model or threshold diagnostics) return None."""
+    if "SYNTHETIC" in warning or warning.startswith("The dry threshold"):
+        return None
+    if warning.startswith("Experimental model"):
+        return t["w_experimental"]
+    match = _RANGE_WARNING.match(warning)
+    if match and match.group(1) in FEATURE_TEXT:
+        name, value, low, high = match.groups()
+        return t["w_range"].format(f=t[FEATURE_TEXT[name]], x=value, lo=low, hi=high)
+    return warning
+
 
 # ======================================================================
 # TRANSLATIONS
@@ -236,22 +252,22 @@ TEXT = {
         "approach_t": "Our approach",
         "approach": (
             "We combine satellite measurements of soil moisture, vegetation, "
-            "rainfall and weather to forecast soil moisture and advise "
-            "when to irrigate."
+            "rainfall and weather to forecast soil moisture and suggest "
+            "when irrigation may be needed."
         ),
         "explain_t": "Explainable decisions",
         "explain": (
             "Every recommendation lists the factors behind it, so farmers "
             "and researchers can check the reasoning."
         ),
-        "site": "Test site",
+        "site": "Study site",
         "site_name": "Site",
         "site_region": "Region",
         "site_crop": "Crop",
         "site_status": "Location status",
         "crop_tbc": "To be confirmed",
         "pending": "Pending verification",
-        "verified": "Satellite-reviewed candidate point",
+        "verified": "Satellite-reviewed study point",
         "coords": "Latitude {lat:.5f}, longitude {lon:.5f}",
         "site_note": "Coordinates are provisional until confirmed on satellite imagery.",
         "data": "NASA data sources",
@@ -260,20 +276,20 @@ TEXT = {
         "c_use": "Use in the model",
         "c_status": "Status",
         "planned": "Planned",
-        "used": "Used (Dariz, 2024-2026)",
+        "used": "Used (Ad Dariz, 2024–2026)",
         "soil": "Soil moisture",
         "soil_use": "Surface soil moisture (regional, ~9 km)",
         "ndvi": "Vegetation index (NDVI)",
-        "ndvi_use": "Crop health and canopy cover",
+        "ndvi_use": "Vegetation condition (16-day composite)",
         "rain": "Precipitation",
         "rain_use": "Rainfall input to the water balance",
         "temp": "Temperature and solar radiation",
         "temp_use": "Evaporative demand",
-        "data_note": "The final list will be confirmed against the official challenge statement.",
+        "data_note": "Prepared historical datasets for the study point; the app does not query NASA services live. Full attribution: data/raw/red_oasis_sources.md.",
         "advisor": "Irrigation advisor (demonstration)",
         "advisor_note": (
-            "Illustrative inputs and simple rules. This is not the trained "
-            "model yet and it does not use live NASA data."
+            "Illustrative inputs and simple rules. The trained model is not "
+            "in use here, and no live NASA data are used."
         ),
         "in_soil": "Soil moisture (%)",
         "in_temp": "Air temperature (°C)",
@@ -325,6 +341,11 @@ TEXT = {
         "shap_down": "{f} = {x:.2f} lowered the forecast by {v:.2f}",
         "shap_imputed": " (missing, filled with a typical value)",
         "shap_note": "These show how the model uses each input. They are not proof of cause.",
+        "shap_axis": "Effect on the forecast (percentage points)",
+        "short": {"soil_moisture_pct": "Soil moisture", "ndvi": "NDVI", "rainfall_7d_mm": "Rain (7 days)",
+                  "temperature_c": "Air temperature", "et0_mm": "ET0"},
+        "w_experimental": "Experimental model: it has not reliably beaten the simple 'no change' (persistence) forecast in evaluation. Do not use it as a validated forecast.",
+        "w_range": "{f} = {x} is outside the range seen in training ({lo} to {hi}), so this forecast is less reliable.",
         "eval_t": "Model evaluation (real NASA-derived data)",
         "eval_line": (
             "Average forecast error (MAE) on {n} held-out days ({start} to {end}): "
@@ -425,12 +446,12 @@ TEXT = {
             "satellite record. It is not validated irrigation advice. Confirm "
             "with the grower before acting."
         ),
-        "chk_soil_now_dry": "Soil moisture now {v:.1f}% vs site median {r:.1f}%",
-        "chk_forecast_dry": "Forecast in 3 days {v:.1f}% vs site median {r:.1f}%",
+        "chk_soil_now_dry": "Soil moisture now {v:.2f}% vs site median {r:.2f}%",
+        "chk_forecast_dry": "Forecast in 3 days {v:.2f}% vs site median {r:.2f}%",
         "chk_rain_below_demand": "Rain in the last 7 days {v:.1f} mm vs 3-day water demand {r:.1f} mm (3 × ET0)",
         "chk_high_demand": "ET0 today {v:.1f} mm/day vs site median {r:.1f} mm/day",
         "chk_yes": "points to irrigation",
-        "chk_no": "does not",
+        "chk_no": "does not point to irrigation",
         "chk_skipped": "Check skipped: an input is missing.",
         "limits": "Project limits",
         "lim1": "Regional, not field-level. One SMAP value covers about 9 km; it describes the surrounding surface soil, not the root zone of irrigated palms, and it cannot see falaj water inside the orchard.",
@@ -497,21 +518,21 @@ TEXT = {
         "approach_t": "منهجنا",
         "approach": (
             "ندمج قياسات الأقمار الصناعية لرطوبة التربة والغطاء النباتي "
-            "والأمطار والطقس لتوقّع رطوبة التربة والتوصية بموعد الري."
+            "والأمطار والطقس لتوقّع رطوبة التربة واقتراح متى قد يلزم الري."
         ),
         "explain_t": "قرارات قابلة للتفسير",
         "explain": (
             "تعرض كل توصية العوامل التي استندت إليها، ليتمكن المزارع "
             "والباحث من التحقق من المنطق."
         ),
-        "site": "الموقع التجريبي",
+        "site": "موقع الدراسة",
         "site_name": "الموقع",
         "site_region": "المنطقة",
         "site_crop": "المحصول",
         "site_status": "حالة الموقع",
         "crop_tbc": "يُحدَّد لاحقاً",
         "pending": "بانتظار التحقق",
-        "verified": "نقطة مرشحة روجعت على صور الأقمار الصناعية",
+        "verified": "نقطة دراسة روجعت على صور الأقمار الصناعية",
         "coords": "خط العرض {lat:.5f}، خط الطول {lon:.5f}",
         "site_note": "الإحداثيات مؤقتة إلى أن تُؤكَّد على صور الأقمار الصناعية.",
         "data": "مصادر بيانات ناسا",
@@ -520,20 +541,20 @@ TEXT = {
         "c_use": "الاستخدام في النموذج",
         "c_status": "الحالة",
         "planned": "مخطط",
-        "used": "مستخدم (الدريز، 2024-2026)",
+        "used": "مستخدم (الدريز، 2024–2026)",
         "soil": "رطوبة التربة",
         "soil_use": "رطوبة سطح التربة (إقليمية، نحو 9 كم)",
         "ndvi": "مؤشر الغطاء النباتي (NDVI)",
-        "ndvi_use": "صحة المحصول وكثافة الغطاء",
+        "ndvi_use": "حالة الغطاء النباتي (صورة مركّبة كل 16 يوماً)",
         "rain": "الهطول المطري",
         "rain_use": "مدخل الأمطار في الميزان المائي",
         "temp": "الحرارة والإشعاع الشمسي",
         "temp_use": "الطلب التبخري",
-        "data_note": "تُؤكَّد القائمة النهائية بحسب نص التحدي الرسمي.",
+        "data_note": "بيانات تاريخية مُعدّة لنقطة الدراسة؛ لا يستعلم التطبيق خدمات ناسا مباشرة. التوثيق الكامل للمصادر: data/raw/red_oasis_sources.md.",
         "advisor": "مستشار الري (عرض توضيحي)",
         "advisor_note": (
-            "مدخلات تجريبية وقواعد مبسّطة. هذا ليس النموذج المدرَّب بعد، "
-            "ولا يستخدم بيانات ناسا الحية."
+            "مدخلات توضيحية وقواعد مبسّطة. النموذج المدرَّب غير مستخدم هنا، "
+            "ولا تُستخدم بيانات ناسا الحية."
         ),
         "in_soil": "رطوبة التربة (%)",
         "in_temp": "درجة حرارة الهواء (°م)",
@@ -573,7 +594,7 @@ TEXT = {
         ),
         "forecast": "توقع {label} بعد {h} أيام: {v:.1f} {unit}",
         "rec_caveat": (
-            "العتبات توضيحية، ورطوبة التربة من SMAP إشارة إقليمية (~9 كم). "
+            "العتبات توضيحية، ورطوبة التربة من SMAP إشارة إقليمية (نحو 9 كم). "
             "تحقق مع المزارع قبل الري."
         ),
         "shap_t": "لماذا أعطى النموذج هذا التوقع (SHAP)",
@@ -582,6 +603,11 @@ TEXT = {
         "shap_down": "{f} = {x:.2f} خفّض التوقع بمقدار {v:.2f}",
         "shap_imputed": " (قيمة مفقودة عُوِّضت بقيمة نموذجية)",
         "shap_note": "توضح هذه القيم كيف يستخدم النموذج كل مدخل، وليست دليلاً على السببية.",
+        "shap_axis": "الأثر على التوقع (نقطة مئوية)",
+        "short": {"soil_moisture_pct": "رطوبة التربة", "ndvi": "NDVI", "rainfall_7d_mm": "أمطار آخر 7 أيام",
+                  "temperature_c": "درجة الحرارة", "et0_mm": "ET0"},
+        "w_experimental": "نموذج تجريبي: لم يتفوق بشكل موثوق على توقع «بلا تغيير» البسيط في التقييم. لا تعتمد عليه كتوقع موثَّق.",
+        "w_range": "{f} = {x} خارج النطاق الذي تدرّب عليه النموذج ({lo} إلى {hi})، لذا يقل الاعتماد على هذا التوقع.",
         "eval_t": "تقييم النموذج (بيانات حقيقية مشتقة من ناسا)",
         "eval_line": (
             "متوسط خطأ التوقع (MAE) على {n} يوماً محجوزاً للاختبار ({start} إلى {end}): "
@@ -654,16 +680,16 @@ TEXT = {
         "strat_slider": "خسارة الإنتاج التي تقبلها مقابل توفير الماء (%)",
         "strat_c1": "الاستراتيجية",
         "strat_c2": "الماء (م³/هكتار في السنة)",
-        "strat_c3": "الماء الموفَّر مقابل الفقاعات",
+        "strat_c3": "الماء الموفَّر مقارنة بالري الفقاعي",
         "strat_c4": "الإنتاج (كجم للنخلة)",
         "strat_c5": "تغير الإنتاج",
         "strat_c6": "ضمن حدّك",
         "strat_yes": "نعم",
         "strat_no": "لا",
         "strat_pick": "استراتيجية مرشحة للاستكشاف",
-        "strat_result": "{name}: {w:,} م³/هكتار في السنة، أقل بنسبة {s:.1f}% من الفقاعات، والإنتاج {y:+.1f}% ({kg} كجم للنخلة).",
-        "strat_caveat": "تذكر التجربة أنه لا فرق معنوي في الإنتاج بين الفقاعات والتنقيط عند 60% من احتياج المحصول، وانخفاضاً واضحاً عند 40% و20%.",
-        "strat_bubbler": "الري بالفقاعات، 100% من احتياج المحصول",
+        "strat_result": "{name}: {w:,} م³/هكتار في السنة، أقل بنسبة {s:.1f}% من الري الفقاعي، والإنتاج {y:+.1f}% ({kg} كجم للنخلة).",
+        "strat_caveat": "تذكر التجربة أنه لا فرق معنوي في الإنتاج بين الري الفقاعي والتنقيط عند 60% من احتياج المحصول، وانخفاضاً واضحاً عند 40% و20%.",
+        "strat_bubbler": "الري الفقاعي، 100% من احتياج المحصول",
         "strat_drip60": "التنقيط تحت السطحي، 60% من احتياج المحصول",
         "strat_drip40": "التنقيط تحت السطحي، 40% من احتياج المحصول",
         "strat_drip20": "التنقيط تحت السطحي، 20% من احتياج المحصول",
@@ -673,8 +699,8 @@ TEXT = {
             "الأخير والتبخر-نتح بسجل الأقمار الصناعية لهذا الموقع نفسه. وهي ليست "
             "نصيحة ري موثقة. تأكد من المزارع قبل التنفيذ."
         ),
-        "chk_soil_now_dry": "رطوبة التربة الآن {v:.1f}% مقابل وسيط الموقع {r:.1f}%",
-        "chk_forecast_dry": "التوقع بعد 3 أيام {v:.1f}% مقابل وسيط الموقع {r:.1f}%",
+        "chk_soil_now_dry": "رطوبة التربة الآن {v:.2f}% مقابل وسيط الموقع {r:.2f}%",
+        "chk_forecast_dry": "التوقع بعد 3 أيام {v:.2f}% مقابل وسيط الموقع {r:.2f}%",
         "chk_rain_below_demand": "أمطار آخر 7 أيام {v:.1f} ملم مقابل احتياج 3 أيام {r:.1f} ملم (3 × ET0)",
         "chk_high_demand": "التبخر-نتح اليوم {v:.1f} ملم/يوم مقابل وسيط الموقع {r:.1f} ملم/يوم",
         "chk_yes": "يشير إلى الري",
@@ -705,7 +731,7 @@ TEXT = {
         "evid_trial": (
             "في محطة الكامل والوافي للأبحاث (نخيل الخلاص، 2015-2016)، استهلك الري "
             "بالتنقيط تحت السطحي عند 60% من احتياج المحصول {w2:,} م³/هكتار في السنة "
-            "مقابل {w1:,} م³/هكتار بالري بالفقاعات (أقل بنسبة {pct:.1f}%)، مع إنتاج "
+            "مقابل {w1:,} م³/هكتار بالري الفقاعي (أقل بنسبة {pct:.1f}%)، مع إنتاج "
             "مماثل ({y2} مقابل {y1} كجم للنخلة). هذه نتيجة منشورة من موقع مختلف، "
             "وليست قياساً من Red Oasis."
         ),
@@ -755,6 +781,18 @@ def load_logo():
 
 LOGO_ICON, LOGO_B64 = load_logo()
 
+CHART_FONT = "IBM Plex Sans, IBM Plex Sans Arabic, Segoe UI, sans-serif"
+
+
+def styled(chart):
+    """Give Altair charts the page font and a little padding so axis labels
+    are measured correctly and never clipped (in English or Arabic)."""
+    return (
+        chart.properties(padding={"left": 16, "right": 16, "top": 8, "bottom": 8})
+        .configure_axis(labelFont=CHART_FONT, titleFont=CHART_FONT, labelFontSize=12, titleFontSize=12)
+        .configure_view(strokeWidth=0)
+    )
+
 st.set_page_config(page_title="Red Oasis", page_icon=LOGO_ICON, layout="wide")
 
 STYLE = """
@@ -803,7 +841,8 @@ if lang == "ar":
     st.markdown(
         "<style>.stApp { direction: rtl; } "
         ".stApp p, .stApp h1, .stApp h2, .stApp h3, .stApp label, .stApp td, .stApp th "
-        "{ text-align: right; }</style>",
+        "{ text-align: right; } "
+        ".stApp .vega-embed, .stApp [data-testid='stVegaLiteChart'] { direction: ltr; }</style>",
         unsafe_allow_html=True,
     )
 
@@ -909,15 +948,24 @@ st.header(t["evid"])
 st.caption(t["evid_note"])
 ev_left, ev_right = st.columns([3, 2])
 with ev_left:
-    st.bar_chart(
-        pd.DataFrame(
-            {t["evid_unit"]: [
-                CROP_RESEARCH["annual_demand_mm"],
-                CROP_RESEARCH["annual_supply_mm_including_effective_rain"],
-            ]},
-            index=[t["evid_demand_short"], t["evid_supply_short"]],
+    _balance = pd.DataFrame({
+        "item": [t["evid_demand_short"], t["evid_supply_short"]],
+        "mm": [
+            CROP_RESEARCH["annual_demand_mm"],
+            CROP_RESEARCH["annual_supply_mm_including_effective_rain"],
+        ],
+    })
+    st.altair_chart(styled(
+        alt.Chart(_balance)
+        .mark_bar(size=70)
+        .encode(
+            x=alt.X("item:N", sort=None, title=None, axis=alt.Axis(labelAngle=0)),
+            y=alt.Y("mm:Q", title=t["evid_unit"], axis=alt.Axis(format=",.0f")),
+            color=alt.Color("item:N", scale=alt.Scale(domain=[t["evid_demand_short"], t["evid_supply_short"]], range=["#b23a22", "#0f2347"]), legend=None),
+            tooltip=[alt.Tooltip("item:N", title=" "), alt.Tooltip("mm:Q", format=",.0f", title=t["evid_unit"])],
         )
-    )
+        .properties(width="container", height=260)
+    ))
 with ev_right:
     st.metric(t["evid_short"], f"{CROP_RESEARCH['shortfall_mm']:,}")
     st.metric(t["evid_ratio"], f"{CROP_RESEARCH['demand_supply_ratio']:.2f}")
@@ -932,17 +980,17 @@ st.caption(t["seas_note"])
 _season = pd.DataFrame(
     {"month": t["months"], "ratio": CROP_RESEARCH["monthly_demand_supply_ratio"]}
 )
-st.altair_chart(
+st.altair_chart(styled(
     alt.Chart(_season)
     .mark_bar()
     .encode(
-        x=alt.X("month:N", sort=t["months"], title=None),
+        x=alt.X("month:N", sort=t["months"], title=None, axis=alt.Axis(labelAngle=0 if lang == "en" else -45)),
         y=alt.Y("ratio:Q", title=t["evid_ratio"]),
         color=alt.condition(alt.datum.ratio > 1, alt.value("#b23a22"), alt.value("#2f7d4f")),
         tooltip=["month", "ratio"],
     )
     .properties(width="container", height=240)
-)
+))
 st.write(t["seas_short"])
 _w1 = CROP_RESEARCH["bubbler_water_m3_ha_year"]
 _w2 = CROP_RESEARCH["subsurface_drip_60pct_etc_water_m3_ha_year"]
@@ -1085,8 +1133,9 @@ if use_ai:
     ))
     st.caption(t["rule_caveat"] if rule else t["rec_caveat"])
     for warning in ai["warnings"]:
-        if "SYNTHETIC" not in warning:
-            st.caption(f"⚠ {warning}")
+        message = localise_warning(warning, t)
+        if message:
+            st.caption(f"⚠ {message}")
 
     if rule:
         st.markdown(f"**{t['rule_t']}**")
@@ -1106,15 +1155,21 @@ if use_ai:
                 f=t[FEATURE_TEXT[c["feature"]]], x=c["value"], v=abs(c["contribution"])
             )
             st.markdown(f"- {line}{t['shap_imputed'] if c['imputed'] else ''}")
-        st.bar_chart(
-            pd.DataFrame({
-                "factor": [t[FEATURE_TEXT[c["feature"]]] for c in exp["contributions"]],
-                "SHAP": [c["contribution"] for c in exp["contributions"]],
-            }),
-            x="factor",
-            y="SHAP",
-            horizontal=True,
-        )
+        _shap = pd.DataFrame({
+            "factor": [t["short"].get(c["feature"], c["feature"]) for c in exp["contributions"]],
+            "effect": [c["contribution"] for c in exp["contributions"]],
+        })
+        st.altair_chart(styled(
+            alt.Chart(_shap)
+            .mark_bar()
+            .encode(
+                y=alt.Y("factor:N", sort=None, title=None, axis=alt.Axis(labelLimit=320)),
+                x=alt.X("effect:Q", title=t["shap_axis"]),
+                color=alt.condition(alt.datum.effect >= 0, alt.value("#2f7d4f"), alt.value("#b23a22")),
+                tooltip=[alt.Tooltip("factor:N", title=" "), alt.Tooltip("effect:Q", format="+.2f", title=t["shap_axis"])],
+            )
+            .properties(width="container", height=34 * len(_shap) + 40)
+        ))
         st.caption(t["shap_note"])
 
     # Metrics are shown only for a model trained on real data.
@@ -1145,7 +1200,6 @@ else:
 
 # ======================================================================
 # OPERATING ENVIRONMENTS
-
 # ======================================================================
 
 st.header(t["env"])
